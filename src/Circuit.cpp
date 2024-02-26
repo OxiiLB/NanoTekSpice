@@ -14,10 +14,3 @@ Circuit::Circuit()
 Circuit::~Circuit()
 {
 }
-
-void Circuit::simulate()
-{
-    for () {
-        component->simulate(0);
-    }
-}

@@ -5,13 +5,14 @@
 ** Header for NotComponent
 */
 
-#include "../AComponent.hpp"
 
 #ifndef NOTCOMPONENT_HPP_
     #define NOTCOMPONENT_HPP_
 
+    #include "../AComponent.hpp"
+
     namespace nts {
-        class NotComponent : public nts::AComponent{
+        class NotComponent : virtual public nts::AComponent{
             public:
                 NotComponent();
                 ~NotComponent();

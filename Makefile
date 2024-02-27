@@ -11,11 +11,17 @@ SRC			=	AComponent.cpp	\
 				components/FalseComponent.cpp	\
 				components/TrueComponent.cpp	\
 				components/NotComponent.cpp	\
+				components/InputComponent.cpp	\
+				components/OutputComponent.cpp	\
 
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 
 MAIN_SRC	=	main.cpp						\
+				Parser/CheckFile.cpp			\
+				Parser/CheckCommands.cpp			\
+				Parser/Parser.cpp				\
+				FileHandling/FileHandling.cpp	\
 
 TEST		=	\
 

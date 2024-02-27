@@ -22,13 +22,17 @@
         public:
             void simulate();
             void display();
-            void setInput(std::string name, nts::Tristate value);
-            void setLink(std::string name, int pin, std::string to, int toPin);
-            void addComponent(std::string type, std::string name);
+            void addComponent(std::string type, nts::IComponent *component);
+            nts::IComponent *getComponent(std::string name);
+
+        // Getters & Setters
+            int getTick();
+            void setTick(int tick);
+
         // Variables
-        private:
-            std::vector<std::unique_ptr<nts::IComponent>> _outputs;
-            std::vector<std::unique_ptr<nts::IComponent>> _inputs;
+        protected:
+            std::vector<std::pair<std::string, nts::IComponent *>> _components;
+            int _tick;
     };
 
 #endif /* !CIRCUIT_HPP_ */

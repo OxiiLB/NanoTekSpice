@@ -5,14 +5,14 @@
 ** Header for AndComponent
 */
 
-#include "../AComponent.hpp"
 
 #ifndef ANDCOMPONENT_HPP_
     #define ANDCOMPONENT_HPP_
 
+    #include "../AComponent.hpp"
 
     namespace nts {
-        class AndComponent : public nts::AComponent{
+        class AndComponent : virtual public nts::AComponent{
             public:
                 AndComponent();
                 ~AndComponent();

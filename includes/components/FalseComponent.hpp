@@ -5,14 +5,14 @@
 ** Header for false component
 */
 
-#include "../AComponent.hpp"
 
 #ifndef FALSECOMPONENT_HPP_
     #define FALSECOMPONENT_HPP_
 
+    #include "../AComponent.hpp"
 
     namespace nts {
-        class FalseComponent : public nts::AComponent {
+        class FalseComponent : virtual public nts::AComponent {
             public:
                 FalseComponent();
                 ~FalseComponent();

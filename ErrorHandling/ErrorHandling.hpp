@@ -178,6 +178,15 @@ namespace nts {
                 return ("Invalid number of arguments");
             }
     };
+
+    // Exception during process
+    class PinException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Pin not exist");
+            }
+    };
 }
 
 #endif /* !ERRORHANDLING_HPP_ */

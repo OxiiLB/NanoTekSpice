@@ -61,10 +61,10 @@ nts::IComponent *Circuit::getComponent(std::string name)
     return nullptr;
 }
 
-void Circuit::display()
-{
-    for (auto &component : this->_components) {
-        if 
-        std::cout << component.first << " : " << component.second->getValue() << std::endl;
-    }
-}
+// void Circuit::display()
+// {
+//     for (auto &component : this->_components) {
+//         if 
+//         std::cout << component.first << " : " << component.second->getValue() << std::endl;
+//     }
+// }

@@ -18,7 +18,6 @@
                 ~AndComponent();
 
                 nts::Tristate compute(std::size_t pin) override;
-
         };
     }
 

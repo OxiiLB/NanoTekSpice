@@ -10,10 +10,12 @@ SRC			=	AComponent.cpp	\
 				components/AndComponent.cpp	\
 				components/FalseComponent.cpp	\
 				components/TrueComponent.cpp	\
-				components/NotComponent.cpp	\
 				components/InputComponent.cpp	\
 				components/OutputComponent.cpp	\
-
+				components/ClockComponent.cpp	\
+				components/NotComponent.cpp	\
+				components/OrComponent.cpp	\
+				components/XorComponent.cpp	\
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 

@@ -17,7 +17,6 @@
                 InputComponent();
                 ~InputComponent();
 
-            protected:
                 nts::Tristate compute(std::size_t pin) override;
         };
     }

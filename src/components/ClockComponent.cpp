@@ -5,7 +5,7 @@
 ** ClockComponent
 */
 
-#include "ClockComponent.hpp"
+#include "../../includes/components/ClockComponent.hpp"
 #include "../../ErrorHandling/ErrorHandling.hpp"
 
 nts::ClockComponent::ClockComponent()
@@ -18,12 +18,12 @@ nts::ClockComponent::~ClockComponent()
 
 void nts::ClockComponent::simulate(std::size_t tick)
 {
-    if (tick % 2 == 0)
-        this->_value = nts::Tristate::True;
-    else if (tick % 2 == 1)
-        this->_value = nts::Tristate::False;
-    else
+    if (tick == 0)
         this->_value = nts::Tristate::Undefined;
+    else if (tick % 2 == 0)
+        this->_value = nts::Tristate::True;
+    else
+        this->_value = nts::Tristate::False;
 }
 
 nts::Tristate nts::ClockComponent::compute(std::size_t pin)

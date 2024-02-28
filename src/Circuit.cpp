@@ -10,6 +10,11 @@
 #include "../includes/components/NotComponent.hpp"
 #include "../includes/components/TrueComponent.hpp"
 #include "../includes/components/FalseComponent.hpp"
+#include "../includes/components/InputComponent.hpp"
+#include "../includes/components/OutputComponent.hpp"
+#include "../includes/components/ClockComponent.hpp"
+#include "../includes/components/OrComponent.hpp"
+#include "../includes/components/XorComponent.hpp"
 
 Circuit::Circuit()
 {
@@ -42,14 +47,9 @@ void Circuit::simulate()
     }
 }
 
-void Circuit::display()
+void Circuit::addComponent(std::string name, nts::IComponent *component)
 {
-
-}
-
-void Circuit::addComponent(std::string type, nts::IComponent *component)
-{
-    this->_components.push_back(std::make_pair(type, component));
+    this->_components[name] = component;
 }
 
 nts::IComponent *Circuit::getComponent(std::string name)
@@ -63,8 +63,17 @@ nts::IComponent *Circuit::getComponent(std::string name)
 
 // void Circuit::display()
 // {
+//     std::cout << "tick: " << this->_tick << std::endl;
+//     std::cout << "input(s):" << std::endl;
 //     for (auto &component : this->_components) {
-//         if 
-//         std::cout << component.first << " : " << component.second->getValue() << std::endl;
+//         if (component.second == "input") {
+//             std::cout << component.first << ": " << component.second->compute(1) << std::endl;
+//         }
+//     }
+//     std::cout << "output(s):" << std::endl;
+//     for (auto &component : this->_components) {
+//         if (component.second == "output") {
+//             std::cout << component.first << ": " << component.second->compute(1) << std::endl;
+//         }
 //     }
 // }

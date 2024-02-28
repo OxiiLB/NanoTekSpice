@@ -6,8 +6,8 @@
 */
 
 #include <iostream>
-#include <vector>
 #include <memory>
+#include <map>
 #include "IComponent.hpp"
 
 #ifndef CIRCUIT_HPP_
@@ -31,7 +31,7 @@
 
         // Variables
         protected:
-            std::vector<std::pair<std::string, nts::IComponent *>> _components;
+            std::map<std::string, nts::IComponent *> _components;
             int _tick;
     };
 

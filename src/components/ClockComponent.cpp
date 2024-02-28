@@ -10,6 +10,7 @@
 
 nts::ClockComponent::ClockComponent()
 {
+    this->_value = nts::Tristate::Undefined;
 }
 
 nts::ClockComponent::~ClockComponent()

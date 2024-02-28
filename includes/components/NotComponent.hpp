@@ -12,13 +12,11 @@
     #include "../AComponent.hpp"
 
     namespace nts {
-        class NotComponent : virtual public nts::AComponent{
+        class NotComponent : virtual public nts::AComponent {
             public:
                 NotComponent();
                 ~NotComponent();
-
                 nts::Tristate compute(std::size_t pin) override;
-
         };
     }
 

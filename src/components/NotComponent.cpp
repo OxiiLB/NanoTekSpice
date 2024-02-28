@@ -6,6 +6,7 @@
 */
 
 #include "../../includes/components/NotComponent.hpp"
+#include "../../ErrorHandling/ErrorHandling.hpp"
 
 nts::NotComponent::NotComponent()
 {
@@ -17,15 +18,13 @@ nts::NotComponent::~NotComponent()
 
 nts::Tristate nts::NotComponent::compute(std::size_t pin)
 {
-    nts::Tristate input1 = nts::Tristate::Undefined;
-    std::pair<std::size_t, nts::IComponent *> link1 = this->getLink(1);
-
-    if (link1.second)
-        input1 = link1.second->compute(link1.first);
-    if (input1 == nts::Tristate::True)
-        return nts::Tristate::False;
-    else if (input1 == nts::Tristate::False)
-        return nts::Tristate::True;
-    return nts::Tristate::Undefined;
-
+    if (pin == 2) {
+        if (this->_links[0].second->compute(this->_links[0].first) == nts::Tristate::True)
+            return nts::Tristate::False;
+        else if (this->_links[0].second->compute(this->_links[0].first) == nts::Tristate::False)
+            return nts::Tristate::True;
+        else
+            return nts::Tristate::Undefined;
+    }
+    throw nts::PinException();
 }

@@ -16,6 +16,7 @@ SRC			=	AComponent.cpp	\
 				components/NotComponent.cpp	\
 				components/OrComponent.cpp	\
 				components/XorComponent.cpp	\
+				gates/Nor.cpp
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 

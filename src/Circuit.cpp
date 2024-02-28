@@ -18,6 +18,8 @@
 
 Circuit::Circuit()
 {
+    this->_tick = 0;
+
 }
 
 Circuit::~Circuit()
@@ -61,19 +63,47 @@ nts::IComponent *Circuit::getComponent(std::string name)
     return nullptr;
 }
 
-// void Circuit::display()
-// {
-//     std::cout << "tick: " << this->_tick << std::endl;
-//     std::cout << "input(s):" << std::endl;
-//     for (auto &component : this->_components) {
-//         if (component.second == "input") {
-//             std::cout << component.first << ": " << component.second->compute(1) << std::endl;
-//         }
-//     }
-//     std::cout << "output(s):" << std::endl;
-//     for (auto &component : this->_components) {
-//         if (component.second == "output") {
-//             std::cout << component.first << ": " << component.second->compute(1) << std::endl;
-//         }
-//     }
-// }
+void Circuit::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+{
+    for (auto &component : this->_components) {
+        if (component.second->compute(pin) == nts::Tristate::Undefined) {
+            component.second->setLink(pin, other, otherPin);
+            return;
+        }
+    }
+}
+
+void Circuit::simulate(std::size_t tick)
+{
+    this->_tick = tick;
+    this->simulate();
+}
+
+nts::Tristate Circuit::compute(std::size_t pin)
+{
+    for (auto &component : this->_components) {
+        if (component.second->compute(pin) != nts::Tristate::Undefined)
+            return component.second->compute(pin);
+    }
+    return nts::Tristate::Undefined;
+}
+
+void Circuit::display()
+{
+    std::cout << "tick: " << this->_tick << std::endl;
+    std::cout << "input(s):" << std::endl;
+    for (auto &component : this->_components) {
+        if (auto input = dynamic_cast<nts::InputComponent *>(component.second)) {
+            std::cout << component.first << ": " << input->compute(1) << std::endl;
+        } else if (auto clock = dynamic_cast<nts::ClockComponent *>(component.second)) {
+            std::cout << component.first << ": " << clock->compute(1) << std::endl;
+        }
+    }
+    std::cout << "output(s):" << std::endl;
+    for (auto &component : this->_components) {
+        if (auto output = dynamic_cast<nts::OutputComponent *>(component.second)) {
+            std::cout << component.first << ": " << output->compute(1) << std::endl;
+        }
+    }
+}
+

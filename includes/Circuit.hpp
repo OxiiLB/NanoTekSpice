@@ -24,6 +24,9 @@
             void display();
             void addComponent(std::string type, nts::IComponent *component);
             nts::IComponent *getComponent(std::string name);
+            void simulate(std::size_t tick);
+            nts::Tristate compute(std::size_t pin);
+            void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
 
         // Getters & Setters
             int getTick();

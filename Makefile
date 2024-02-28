@@ -5,24 +5,25 @@
 ## makefile
 ##
 
-SRC			=	AComponent.cpp	\
-				Circuit.cpp		\
-				components/AndComponent.cpp	\
+SRC			=	AComponent.cpp					\
+				Circuit.cpp						\
+				components/AndComponent.cpp		\
 				components/FalseComponent.cpp	\
 				components/TrueComponent.cpp	\
 				components/InputComponent.cpp	\
 				components/OutputComponent.cpp	\
 				components/ClockComponent.cpp	\
-				components/NotComponent.cpp	\
-				components/OrComponent.cpp	\
-				components/XorComponent.cpp	\
-				gates/Nor.cpp
+				components/NotComponent.cpp		\
+				components/OrComponent.cpp		\
+				components/XorComponent.cpp		\
+				gates/Nor.cpp					\
+				ComponentFactory.cpp			\
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 
 MAIN_SRC	=	main.cpp						\
 				Parser/CheckFile.cpp			\
-				Parser/CheckCommands.cpp			\
+				Parser/CheckCommands.cpp		\
 				Parser/Parser.cpp				\
 				FileHandling/FileHandling.cpp	\
 

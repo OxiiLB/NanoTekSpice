@@ -26,6 +26,11 @@
                 std::unique_ptr<IComponent> createOrComponent() const;
                 std::unique_ptr<IComponent> createClockComponent() const;
                 std::unique_ptr<IComponent> createTrueComponent() const;
+                std::unique_ptr<IComponent> createFalseComponent() const;
+                std::unique_ptr<IComponent> createInputComponent() const;
+                std::unique_ptr<IComponent> createOutputComponent() const;
+                std::unique_ptr<IComponent> createNotComponent() const;
+                std::unique_ptr<IComponent> createXorComponent() const;
 
             protected:
                 std::unordered_map<std::string, std::function<std::unique_ptr<IComponent>()>> _FunctionTab;

@@ -22,10 +22,11 @@ SRC			=	AComponent.cpp					\
 DIR_SRC		=	$(addprefix src/, $(SRC))
 
 MAIN_SRC	=	main.cpp						\
+				Parser/Parser.cpp				\
 				Parser/CheckFile.cpp			\
 				Parser/CheckCommands.cpp		\
-				Parser/Parser.cpp				\
 				FileHandling/FileHandling.cpp	\
+				Tools/BasicTools.cpp			\
 
 TEST		=	\
 

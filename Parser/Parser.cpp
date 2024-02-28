@@ -8,7 +8,20 @@
 #include "../ErrorHandling/ErrorHandling.hpp"
 #include "../FileHandling/FileHandling.hpp"
 #include "../Tools/BasicTools.hpp"
+#include "../includes/AComponent.hpp"
+#include "../includes/components/AndComponent.hpp"
+#include "../includes/components/ClockComponent.hpp"
+#include "../includes/components/FalseComponent.hpp"
+#include "../includes/components/InputComponent.hpp"
+#include "../includes/components/NotComponent.hpp"
+#include "../includes/components/OrComponent.hpp"
+#include "../includes/components/OutputComponent.hpp"
+#include "../includes/components/TrueComponent.hpp"
+#include "../includes/components/XorComponent.hpp"
+#include "../includes/ComponentFactory.hpp"
 #include "Parser.hpp"
+
+class Circuit;
 
 static int get_section_size(const std::string &file_str, const char *section)
 {
@@ -19,7 +32,7 @@ static int get_section_size(const std::string &file_str, const char *section)
     int pos = (int)(position);
     for (pos = pos; file_str[pos] != '\n'; pos++);
     pos++;
-    for (pos = pos; (file_str[pos] != '.' && file_str[pos + 1] != 'l') && file_str[pos] != '\0'; pos++) {
+    for (pos = pos; file_str[pos] != '.' && file_str[pos] != '\0'; pos++) {
         if (file_str[pos] == '\n')
             size++;
         if (file_str[pos + 1] == '\0')
@@ -41,7 +54,7 @@ static char **get_array(const std::string &file_str, const char *section) {
     int pos = (int)(position);
     for (pos = pos; file_str[pos] != '\n'; pos++);
     pos++;
-    for (pos = pos; (file_str[pos] != '.' && file_str[pos + 1] != 'l') && file_str[pos] != '\0'; pos++) {
+    for (pos = pos; file_str[pos] != '.' && file_str[pos] != '\0'; pos++) {
         array[i] = (char *)malloc(sizeof(char) * 100);
         if (!array[i])
             throw std::runtime_error("Malloc failed");
@@ -62,28 +75,128 @@ static char **get_array(const std::string &file_str, const char *section) {
     return array;
 }
 
-
-void display_array(char **array) //////////////////////////////////
+static int get_comp_type(char *str)
 {
-    for (int i = 0; array[i] != NULL; i++) {
-        printf("%s\n", array[i]);
+    int i = 0;
+    for (i = 0; i < 21; i++) {
+        if (strstr(str, comp_type_array[i]) != NULL)
+            return i;
     }
+    return -1;
 }
 
-void parse_file(const std::string &file_name)
+static char *get_name(char *name, char *str)
+{
+    int i = 0;
+    int j = 0;
+    for (i = 0; str[i] != ' '; i++);
+    i++;
+    for (i = i; str[i] != '\0'; i++) {
+        name[j] = str[i];
+        j++;
+    }
+    name[j] = '\0';
+    return name;
+}
+
+static std::string get_comp_name(char *str)
+{
+    int i = 0;
+    std::string name;
+    for (i = 0; str[i] != ' '; i++);
+    i++;
+    for (i = i; str[i] != ':'; i++) {
+        name += str[i];
+    }
+    return name;
+}
+
+static std::size_t get_comp_pin_num(char *str)
+{
+    int i = 0;
+    for (i = 0; str[i] != ' '; i++);
+    for (i = i; str[i] != ':'; i++);
+    i++;
+    return ((std::size_t)(str[i]));
+}
+
+static std::string get_other_name(char *str)
+{
+    int i = 0;
+    std::string name;
+    for (i = 0; str[i] != ':'; i++) {
+        name += str[i];
+    }
+    return name;
+}
+
+static std::size_t get_other_pin_num(char *str)
+{
+    int i = 0;
+    for (i = 0; str[i] != ':'; i++);
+    i++;
+    return ((std::size_t)(str[i]));
+}
+
+static int check_in_out(char **chipsets, std::string name)
+{
+    for (int i = 0; chipsets[i] != NULL; i++) {
+        if (strstr(chipsets[i], name.c_str()) != NULL) {
+            if (strstr(chipsets[i], "input") != NULL)
+                return 1;
+            else
+                return 0;
+        }
+    }
+    return -1;
+}
+
+void fill_circuit(Circuit &circuit, char **chipsets, char **links)
+{
+    int i = 0;
+    int j = 0;
+    std::size_t comp_pin = 0;
+    std::size_t other_pin = 0;
+    std::string comp;
+    std::string other;
+    nts::ComponentFactory factory;
+    char *comp_name = (char *)malloc(sizeof(char) * 20);
+    for (i = 0; chipsets[i] != NULL; i++) {
+        j = get_comp_type(chipsets[i]);
+        comp_name = get_name(comp_name, chipsets[i]);
+        auto comp = factory.createComponent(comp_type_array[j]);
+        circuit.addComponent(comp_name, comp.get());
+        comp_name = NULL;
+    }
+    for (i = 0; links[i] != NULL; i++) {
+        comp = get_comp_name(links[i]);
+        comp_pin = get_comp_pin_num(links[i]);
+        other = get_other_name(links[i]);
+        other_pin = get_other_pin_num(links[i]);
+
+        if (check_in_out(chipsets, other) == 1) {
+            circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
+        } else {
+            circuit.getComponent(other)->setLink(other_pin, *(circuit.getComponent(comp)), comp_pin);
+        }
+    }
+    free(comp_name);
+}
+
+void parse_file(Circuit &circuit, const std::string &file_name)
 {
     std::string file_str = nts::get_file_content(file_name);
     if (file_str.empty())
         throw std::runtime_error("File not found");
-
     char **chipsets = get_array(file_str, ".chipsets:");
     if (!chipsets)
         throw std::runtime_error("Failed to get chipsets");
-
     char **links = get_array(file_str, ".links:");
     if (!links)
         throw std::runtime_error("Failed to get links");
 
-    //display_array(chipsets); //////////////////////////////////
-    //display_array(links); //////////////////////////////////
+    fill_circuit(circuit, chipsets, links);
+
+    free_2d_array(chipsets);
+    free_2d_array(links);
 }

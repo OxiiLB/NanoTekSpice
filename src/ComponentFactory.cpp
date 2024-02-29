@@ -19,15 +19,15 @@
 
 nts::ComponentFactory::ComponentFactory()
 {
-    _FunctionTab["Clock"] = [this](){ return createClockComponent(); };
-    _FunctionTab["And"] = [this](){ return createAndComponent(); };
-    _FunctionTab["Or"] = [this](){ return createOrComponent(); };
-    _FunctionTab["Xor"] = [this](){ return createXorComponent(); };
-    _FunctionTab["Not"] = [this](){ return createNotComponent(); };
-    _FunctionTab["Input"] = [this](){ return createInputComponent(); };
-    _FunctionTab["Output"] = [this](){ return createOutputComponent(); };
-    _FunctionTab["True"] = [this](){ return createTrueComponent(); };
-    _FunctionTab["False"] = [this](){ return createFalseComponent(); };
+    _FunctionTab["clock"] = [this](){ return createClockComponent(); };
+    _FunctionTab["and"] = [this](){ return createAndComponent(); };
+    _FunctionTab["or"] = [this](){ return createOrComponent(); };
+    _FunctionTab["xor"] = [this](){ return createXorComponent(); };
+    _FunctionTab["not"] = [this](){ return createNotComponent(); };
+    _FunctionTab["input"] = [this](){ return createInputComponent(); };
+    _FunctionTab["output"] = [this](){ return createOutputComponent(); };
+    _FunctionTab["true"] = [this](){ return createTrueComponent(); };
+    _FunctionTab["false"] = [this](){ return createFalseComponent(); };
 }
 
 nts::ComponentFactory::~ComponentFactory()

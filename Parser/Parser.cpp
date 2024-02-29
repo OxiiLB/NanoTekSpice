@@ -144,7 +144,7 @@ static int check_in_out(char **chipsets, std::string name)
         if (strstr(chipsets[i], name.c_str()) != NULL) {
             if (strstr(chipsets[i], "input") != NULL)
                 return 1;
-            else
+            if (strstr(chipsets[i], "output") != NULL)
                 return 0;
         }
     }
@@ -160,27 +160,30 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
     std::string comp;
     std::string other;
     nts::ComponentFactory factory;
-    char *comp_name = (char *)malloc(sizeof(char) * 20);
-    for (i = 0; chipsets[i] != NULL; i++) {
+    for (i = 0; chipsets[i + 1] != NULL; i++) {
+        char *comp_name = (char *)malloc(sizeof(char) * 20);
         j = get_comp_type(chipsets[i]);
         comp_name = get_name(comp_name, chipsets[i]);
         auto comp = factory.createComponent(comp_type_array[j]);
         circuit.addComponent(comp_name, comp.get());
         comp_name = NULL;
+        free(comp_name);
     }
     for (i = 0; links[i] != NULL; i++) {
         comp = get_comp_name(links[i]);
         comp_pin = get_comp_pin_num(links[i]);
         other = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
-
         if (check_in_out(chipsets, other) == 1) {
             circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
-        } else {
+            // segfaults here
+            std::cout << "ok" << std::endl; /////////////////////////////////
+        } else if (check_in_out(chipsets, other) == 0) {
             circuit.getComponent(other)->setLink(other_pin, *(circuit.getComponent(comp)), comp_pin);
+        } else {
+            throw std::runtime_error("error in link loop fill circuit"); ////////////////////////
         }
     }
-    free(comp_name);
 }
 
 void parse_file(Circuit &circuit, const std::string &file_name)

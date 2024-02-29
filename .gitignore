@@ -35,3 +35,6 @@ test
 # Files
 notes.txt
 *.nts
+
+vgcore.*
+*.vscode

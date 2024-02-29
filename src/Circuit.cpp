@@ -5,6 +5,7 @@
 ** Functions for class Circuit
 */
 
+#include <iostream>
 #include "../includes/Circuit.hpp"
 #include "../includes/components/AndComponent.hpp"
 #include "../includes/components/NotComponent.hpp"
@@ -49,29 +50,22 @@ void Circuit::simulate()
     }
 }
 
-void Circuit::addComponent(std::string name, nts::IComponent *component)
+void Circuit::addComponent(std::string name, std::unique_ptr<nts::IComponent> &component)
 {
-    this->_components[name] = component;
+    this->_components[name] = std::move(component);
 }
 
 nts::IComponent *Circuit::getComponent(std::string name)
 {
-    for (auto &component : this->_components) {
-        if (component.first == name)
-            return component.second;
+    for (const auto &pair : this->_components) {
+        if (pair.first == name)
+            return pair.second.get();
     }
     return nullptr;
 }
 
 void Circuit::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-    std::cout << "Circuit::setLink" << std::endl;
-    for (auto &component : this->_components) {
-        if (component.second->compute(pin) == nts::Tristate::Undefined) {
-            component.second->setLink(pin, other, otherPin);
-            return;
-        }
-    }
 }
 
 void Circuit::simulate(std::size_t tick)
@@ -82,7 +76,7 @@ void Circuit::simulate(std::size_t tick)
 
 nts::Tristate Circuit::compute(std::size_t pin)
 {
-    for (auto &component : this->_components) {
+    for (const auto &component : this->_components) {
         if (component.second->compute(pin) != nts::Tristate::Undefined)
             return component.second->compute(pin);
     }
@@ -93,17 +87,22 @@ void Circuit::display()
 {
     std::cout << "tick: " << this->_tick << std::endl;
     std::cout << "input(s):" << std::endl;
-    for (auto &component : this->_components) {
-        if (auto input = dynamic_cast<nts::InputComponent *>(component.second)) {
-            std::cout << component.first << ": " << input->compute(1) << std::endl;
-        } else if (auto clock = dynamic_cast<nts::ClockComponent *>(component.second)) {
-            std::cout << component.first << ": " << clock->compute(1) << std::endl;
+    for (const auto &component : this->_components) {
+        const std::string &name = component.first;
+        const std::unique_ptr<nts::IComponent> &comp = component.second;
+        if (dynamic_cast<nts::InputComponent *>(comp.get())) {
+            std::cout << name << ": " << comp->compute(1) << std::endl;
+        }
+        if (dynamic_cast<nts::ClockComponent *>(comp.get())) {
+            std::cout << name << ": " << comp->compute(1) << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
-    for (auto &component : this->_components) {
-        if (auto output = dynamic_cast<nts::OutputComponent *>(component.second)) {
-            std::cout << component.first << ": " << output->compute(1) << std::endl;
+    for (const auto &component : this->_components) {
+        const std::string &name = component.first;
+        const std::unique_ptr<nts::IComponent> &comp = component.second;
+        if (dynamic_cast<nts::OutputComponent *>(comp.get())) {
+            std::cout << name << ": " << comp->compute(1) << std::endl;
         }
     }
 }

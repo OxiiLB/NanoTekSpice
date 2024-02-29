@@ -22,7 +22,7 @@
         public:
             void simulate();
             void display();
-            void addComponent(std::string name, nts::IComponent *component);
+            void addComponent(std::string name, std::unique_ptr<nts::IComponent> &component);
             nts::IComponent *getComponent(std::string name);
             void simulate(std::size_t tick);
             nts::Tristate compute(std::size_t pin);
@@ -34,7 +34,7 @@
 
         // Variables
         protected:
-            std::map<std::string, nts::IComponent *> _components;
+            std::map<std::string, std::unique_ptr<nts::IComponent>> _components;
             int _tick;
     };
 

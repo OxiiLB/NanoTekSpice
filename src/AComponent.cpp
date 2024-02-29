@@ -6,6 +6,7 @@
 */
 
 #include "../includes/AComponent.hpp"
+#include "../ErrorHandling/ErrorHandling.hpp"
 #include <map>
 
 nts::AComponent::AComponent()
@@ -19,8 +20,10 @@ void nts::AComponent::simulate(std::size_t tick)
 
 void nts::AComponent::setLink(std::size_t pin , nts::IComponent &other, std::size_t otherPin)
 {
-    pin --;
-    this->_links[pin] = std::make_pair(otherPin, &other);
+    if (pin > 0 && this->_links.size() >= pin)
+        this->_links[pin - 1] = std::make_pair(otherPin, &other);
+    else
+        throw nts::SetlinkException();
 }
 
 std::pair<std::size_t, nts::IComponent *> nts::AComponent::getLink(std::size_t pin) const

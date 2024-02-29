@@ -195,6 +195,14 @@ namespace nts {
                 return ("A component does not exist");
             }
     };
+
+    class SetlinkException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Pin out of range");
+            }
+    };
 }
 
 #endif /* !ERRORHANDLING_HPP_ */

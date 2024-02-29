@@ -135,9 +135,11 @@ static std::string get_other_name(char *str)
 static std::size_t get_other_pin_num(char *str)
 {
     int i = 0;
+    int res = 0;
     for (i = 0; str[i] != ':'; i++);
     i++;
-    return ((std::size_t)(str[i]));
+    res = (str[i] - '0');
+    return ((std::size_t)(res));
 }
 
 static int check_in_out(char **chipsets, std::string name)
@@ -169,7 +171,6 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         j = get_comp_type(chipsets[i]);
         comp_name = get_name(comp_name, chipsets[i]);
         std::unique_ptr<nts::IComponent> comp = factory.createComponent(comp_type_array[j]);
-        //std::cout << "ok" << std::endl; ////////////////////////
         circuit.addComponent(comp_name, comp);
         comp_name = NULL;
         free(comp_name);
@@ -179,6 +180,7 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         comp_pin = get_comp_pin_num(links[i]);
         other = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
+        std::cout << "comp_name: " << comp << "\ncomp_pin: " << comp_pin << "\nother_name: " << other << "\nother_pin: " << other_pin << std::endl; ////////////////
         if (check_in_out(chipsets, other) == 1 || check_in_out(chipsets, other) == 2) {
            circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
         } else if (check_in_out(chipsets, other) == 0) {

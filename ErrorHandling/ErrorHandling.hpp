@@ -203,6 +203,30 @@ namespace nts {
                 return ("Pin out of range");
             }
     };
+
+    class MallocFailedException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Malloc failed");
+            }
+    };
+
+    class FileNotFoundException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("File not found");
+            }
+    };
+
+    class FailedToGet2DArrayException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Failed to get 2D array");
+            }
+    };
 }
 
 #endif /* !ERRORHANDLING_HPP_ */

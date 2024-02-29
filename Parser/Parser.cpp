@@ -47,7 +47,7 @@ static char **get_array(const std::string &file_str, const char *section) {
     int size = get_section_size(file_str, section);
     char **array = (char **)malloc(sizeof(char *) * (size + 1));
     if (!array)
-        throw std::runtime_error("Malloc failed");
+        throw nts::MallocFailedException();
     std::size_t position = file_str.find(section);
     if (position == std::string::npos)
         throw nts::InvalidSectionFormatException();
@@ -57,7 +57,7 @@ static char **get_array(const std::string &file_str, const char *section) {
     for (pos = pos; file_str[pos] != '.' && file_str[pos] != '\0'; pos++) {
         array[i] = (char *)malloc(sizeof(char) * 100);
         if (!array[i])
-            throw std::runtime_error("Malloc failed");
+            throw nts::MallocFailedException();
         j = 0;
         while (file_str[pos] != '\n' && file_str[pos] != '#' && file_str[pos] != '\0') {
             array[i][j++] = file_str[pos++];
@@ -179,13 +179,12 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         comp_pin = get_comp_pin_num(links[i]);
         other = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
-        //std::cout << "comp_name: " << comp << "\ncomp_pin: " << comp_pin << "\nother_name: " << other << "\nother_pin: " << other_pin << std::endl; /////////////////////
         if (check_in_out(chipsets, other) == 1 || check_in_out(chipsets, other) == 2) {
            circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
         } else if (check_in_out(chipsets, other) == 0) {
            circuit.getComponent(other)->setLink(other_pin, *(circuit.getComponent(comp)), comp_pin);
         } else {
-           throw std::runtime_error("error in link loop fill circuit"); ////////////////////////
+           throw std::runtime_error("Error in link loop in fill circuit");
         }
     }
 }
@@ -194,16 +193,14 @@ void parse_file(Circuit &circuit, const std::string &file_name)
 {
     std::string file_str = nts::get_file_content(file_name);
     if (file_str.empty())
-        throw std::runtime_error("File not found");
+        throw nts::FileNotFoundException();
     char **chipsets = get_array(file_str, ".chipsets:");
     if (!chipsets)
-        throw std::runtime_error("Failed to get chipsets");
+        throw nts::FailedToGet2DArrayException();
     char **links = get_array(file_str, ".links:");
     if (!links)
-        throw std::runtime_error("Failed to get links");
-
+        throw nts::FailedToGet2DArrayException();
     fill_circuit(circuit, chipsets, links);
-
     free_2d_array(chipsets);
     free_2d_array(links);
 }

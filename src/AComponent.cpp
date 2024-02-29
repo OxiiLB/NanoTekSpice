@@ -20,7 +20,7 @@ void nts::AComponent::simulate(std::size_t tick)
 
 void nts::AComponent::setLink(std::size_t pin , nts::IComponent &other, std::size_t otherPin)
 {
-    if (pin > 0 && this->_links.size() >= pin)
+    if (pin > 0)
         this->_links[pin - 1] = std::make_pair(otherPin, &other);
     else
         throw nts::SetlinkException();

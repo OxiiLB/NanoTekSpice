@@ -21,8 +21,8 @@
                 // Methods
                 virtual void simulate(std::size_t tick) override;
                 virtual nts::Tristate compute(std::size_t pin) override = 0;
-                virtual void setLink (std::size_t pin , nts::IComponent &other, std::size_t otherPin) override;
-                virtual std::pair<std::size_t, nts::IComponent *> getLink(std::size_t pin) const;
+                void setLink (std::size_t pin , nts::IComponent &other, std::size_t otherPin) override;
+                std::pair<std::size_t, nts::IComponent *> getLink(std::size_t pin) const;
 
             protected:
                 std::vector<std::pair<std::size_t, nts::IComponent *>> _links;

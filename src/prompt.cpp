@@ -31,6 +31,7 @@ std::pair<std::string, nts::Tristate> prompt::parse_input(std::string input)
     if (pos == std::string::npos)
         throw nts::InvalidCommandException();
     std::string name = input.substr(0, pos);
+    // check if input name exists !!!
     std::string value = input.substr(pos + 1);
     if (value == "0")
         return std::make_pair(name, nts::Tristate::False);

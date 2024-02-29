@@ -148,7 +148,9 @@ static int check_in_out(char **chipsets, std::string name)
         if (strstr(chipsets[i], name.c_str()) != NULL) {
             if (strstr(chipsets[i], "clock") != NULL)
                 return 2;
-            if (strstr(chipsets[i], "input") != NULL)
+            if (strstr(chipsets[i], "input") != NULL ||
+                strstr(chipsets[i], "true") != NULL ||
+                strstr(chipsets[i], "false") != NULL)
                 return 1;
             if (strstr(chipsets[i], "output") != NULL)
                 return 0;

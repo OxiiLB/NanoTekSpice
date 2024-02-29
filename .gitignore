@@ -31,10 +31,12 @@
 *.out
 *.app
 test
+nanotekspice
 
 # Files
 notes.txt
 *.nts
+test_main.cpp
 
 vgcore.*
 *.vscode

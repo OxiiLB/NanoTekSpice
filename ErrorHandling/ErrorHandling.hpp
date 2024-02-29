@@ -192,7 +192,7 @@ namespace nts {
         public:
             const char *what() const noexcept override
             {
-                return ("A component does not exist");
+                return ("Component does not exist");
             }
     };
 

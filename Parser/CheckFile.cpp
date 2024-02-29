@@ -29,9 +29,6 @@ void check_config_file(const std::string &file_name)
     if (file.find(".chipsets:", c + 1) != std::string::npos)
         throw nts::MultipleChipsetSectionException();
 
-    if (file.find("input") == std::string::npos && file.find("clock") == std::string::npos)
-        throw nts::NoChipsetException();
-
     if (file.find("output") == std::string::npos)
         throw nts::NoOutputException();
 

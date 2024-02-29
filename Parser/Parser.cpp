@@ -164,7 +164,7 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         char *comp_name = (char *)malloc(sizeof(char) * 20);
         j = get_comp_type(chipsets[i]);
         comp_name = get_name(comp_name, chipsets[i]);
-        auto comp = factory.createComponent(comp_type_array[j]);
+        auto comp = factory.createComponent(comp_type_array[j - 1]);
         circuit.addComponent(comp_name, comp.get());
         comp_name = NULL;
         free(comp_name);
@@ -176,7 +176,6 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         other_pin = get_other_pin_num(links[i]);
         //if (check_in_out(chipsets, other) == 1) {
         //    circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
-        //    // segfaults here
         //    //std::cout << "ok" << std::endl; /////////////////////////////////
         //} else if (check_in_out(chipsets, other) == 0) {
         //    circuit.getComponent(other)->setLink(other_pin, *(circuit.getComponent(comp)), comp_pin);
@@ -185,6 +184,7 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         //}
     }
 }
+
 
 void parse_file(Circuit &circuit, const std::string &file_name)
 {

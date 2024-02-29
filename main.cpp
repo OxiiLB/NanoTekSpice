@@ -34,7 +34,7 @@ int main (int ac, char **av)
             // check_command_line();
         }
         parse_file(circuit, av[1]);
-        //circuit.display();
+        circuit.display();
         //std::cout << "ok" << std::endl; /////////////////
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
@@ -42,26 +42,22 @@ int main (int ac, char **av)
     }
 }
 
-
-        // nts::ComponentFactory factory;
-        // auto TrueComp = factory.createComponent("True");
-        // auto orGate = factory.createComponent("Or");
-        // auto clock = factory.createComponent("Clock");
-
-        // orGate->setLink(1, *clock, 1);
-        // orGate->setLink(2, *TrueComp, 1);
-        // std::cout << "!(" << clock->compute(1) << " && " << TrueComp->compute(1) << ") ->" << orGate->compute(3) << std::endl;
-        // clock->simulate(1);
-        // std::cout << "!(" << clock->compute(1) << " && " << TrueComp->compute(1) << ") ->" << orGate->compute(3) << std::endl;
-        // clock->simulate(2);
-        // std::cout << "!(" << clock->compute(1) << " && " << TrueComp->compute(1) << ") ->" << orGate->compute(3) << std::endl;
-
-        // std::cout << std::endl << "--------------------------------CIRCUIT--------------------------------" << std::endl;
-
-        // Circuit circuit;
-        // circuit.addComponent("OrGate", orGate.get());
-        // circuit.addComponent("Clock", clock.get());
-        // circuit.addComponent("True", TrueComp.get());
-        // circuit.display();
-        // prompt prompt;
-        // prompt.run();
+// nts::ComponentFactory factory;
+// auto TrueComp = factory.createComponent("True");
+// auto orGate = factory.createComponent("Or");
+// auto clock = factory.createComponent("Clock");
+// orGate->setLink(1, *clock, 1);
+// orGate->setLink(2, *TrueComp, 1);
+// std::cout << "!(" << clock->compute(1) << " && " << TrueComp->compute(1) << ") ->" << orGate->compute(3) << std::endl;
+// clock->simulate(1);
+// std::cout << "!(" << clock->compute(1) << " && " << TrueComp->compute(1) << ") ->" << orGate->compute(3) << std::endl;
+// clock->simulate(2);
+// std::cout << "!(" << clock->compute(1) << " && " << TrueComp->compute(1) << ") ->" << orGate->compute(3) << std::endl;
+// std::cout << std::endl << "--------------------------------CIRCUIT--------------------------------" << std::endl;
+// Circuit circuit;
+// circuit.addComponent("OrGate", orGate.get());
+// circuit.addComponent("Clock", clock.get());
+// circuit.addComponent("True", TrueComp.get());
+// circuit.display();
+// prompt prompt;
+// prompt.run();

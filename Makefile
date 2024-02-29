@@ -18,7 +18,6 @@ SRC			=	AComponent.cpp					\
 				components/XorComponent.cpp		\
 				gates/Nor.cpp					\
 				ComponentFactory.cpp			\
-				prompt.cpp						\
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 

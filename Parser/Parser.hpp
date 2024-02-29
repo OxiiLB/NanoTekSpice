@@ -17,7 +17,7 @@
     #include "../includes/Circuit.hpp"
 
     static char comp_type_array[8][10] = {
-        "Clock", "And", "Or", "Xor",  "Not", "Input", "Output"
+        "clock", "and", "or", "xor", "not", "input", "output"
     };
 
 void check_config_file(const std::string &file_name);

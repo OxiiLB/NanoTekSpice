@@ -27,8 +27,8 @@
 int main (int ac, char **av)
 {
     Circuit circuit;
+    prompt prompt;
     try {
-        prompt prompt;
         if (ac < 2) {
             throw nts::NoFileException();
         } else {

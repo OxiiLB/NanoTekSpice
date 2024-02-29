@@ -22,7 +22,8 @@
             void run(Circuit &circuit);
             void exit();
             void launch_command(Circuit &circuit);
-            std::pair<std::string, std::size_t> parse_input(std::string input);
+            std::pair<std::string, nts::Tristate> parse_input(std::string input);
+            bool getExit() const { return this->_exit; };
 
         protected:
             bool _exit;

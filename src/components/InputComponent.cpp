@@ -10,6 +10,8 @@
 
 nts::InputComponent::InputComponent()
 {
+    this->_value = nts::Tristate::Undefined;
+    this->_nextValue = nts::Tristate::Undefined;
 }
 
 nts::InputComponent::~InputComponent()
@@ -30,5 +32,5 @@ nts::Tristate nts::InputComponent::compute(std::size_t pin)
 {
     if (pin != 1)
         throw nts::PinException();
-    return nts::Tristate::True;
+    return this->_value;
 }

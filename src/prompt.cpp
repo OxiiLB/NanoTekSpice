@@ -25,14 +25,21 @@ void prompt::exit()
         this->_exit = true;
 }
 
-std::pair<std::string, std::size_t> prompt::parse_input(std::string input)
+std::pair<std::string, nts::Tristate> prompt::parse_input(std::string input)
 {
     std::size_t pos = input.find("=");
     if (pos == std::string::npos)
         throw nts::InvalidCommandException();
     std::string name = input.substr(0, pos);
     std::string value = input.substr(pos + 1);
-    return std::make_pair(name, std::stoi(value));
+    if (value == "0")
+        return std::make_pair(name, nts::Tristate::False);
+    else if (value == "1")
+        return std::make_pair(name, nts::Tristate::True);
+    else if (value == "U")
+        return std::make_pair(name, nts::Tristate::Undefined);
+    else
+        throw nts::InvalidValueException();
 }
 
 
@@ -47,10 +54,19 @@ void prompt::launch_command(Circuit &circuit)
     else if (this->_input == "loop")
         this->_isLooping = true;
     else {
-        std::pair pair = this->parse_input(this->_input);
-        // std::cout << "Setting " << pair.first << " to " << pair.second << std::endl;
-        dynamic_cast<nts::InputComponent *>(circuit.getComponent(pair.first))->setValue(static_cast<nts::Tristate>(pair.second));
+        try {
+            std::pair pair = this->parse_input(this->_input);
+            nts::InputComponent *inputComp = dynamic_cast<nts::InputComponent *>(circuit.getComponent(pair.first));
+            if (inputComp != nullptr) {
+                inputComp->setValue(pair.second);
+            } else {
+                std::cerr << "Component " << pair.first << " is not an input" << std::endl;
+            }
+        } catch(const std::exception& e) {
+            std::cerr << e.what() << '\n';
+        }
     }
+
 }
 
 void prompt::run(Circuit &circuit)

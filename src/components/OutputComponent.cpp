@@ -20,5 +20,5 @@ nts::Tristate nts::OutputComponent::compute(std::size_t pin)
 {
     if (pin != 1)
         throw nts::PinException();
-    return nts::Tristate::True;
+    return this->_links[0].second->compute(this->_links[0].first);
 }

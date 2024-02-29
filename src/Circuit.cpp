@@ -71,7 +71,9 @@ void Circuit::setLink(std::size_t pin, nts::IComponent &other, std::size_t other
 void Circuit::simulate(std::size_t tick)
 {
     this->_tick = tick;
-    this->simulate();
+    for (auto &component : this->_components) {
+        component.second->simulate(this->_tick);
+    }
 }
 
 nts::Tristate Circuit::compute(std::size_t pin)

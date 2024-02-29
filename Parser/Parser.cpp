@@ -180,7 +180,6 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         comp_pin = get_comp_pin_num(links[i]);
         other = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
-        std::cout << "comp_name: " << comp << "\ncomp_pin: " << comp_pin << "\nother_name: " << other << "\nother_pin: " << other_pin << std::endl; ////////////////
         if (check_in_out(chipsets, other) == 1 || check_in_out(chipsets, other) == 2) {
            circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
         } else if (check_in_out(chipsets, other) == 0) {

@@ -22,11 +22,13 @@
 #include "includes/components/XorComponent.hpp"
 #include "includes/ComponentFactory.hpp"
 #include "Parser/Parser.hpp"
+#include "includes/prompt.hpp"
 
 int main (int ac, char **av)
 {
     Circuit circuit;
     try {
+        prompt prompt;
         if (ac < 2) {
             throw nts::NoFileException();
         } else {
@@ -34,10 +36,11 @@ int main (int ac, char **av)
             // check_command_line();
         }
         parse_file(circuit, av[1]);
-        circuit.display();
-        //std::cout << "ok" << std::endl; /////////////////
+        prompt.run(circuit);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 84;
     }
+    return 0;
 }
+

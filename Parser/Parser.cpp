@@ -174,15 +174,15 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         comp_pin = get_comp_pin_num(links[i]);
         other = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
-        if (check_in_out(chipsets, other) == 1) {
-            circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
-            // segfaults here
-            std::cout << "ok" << std::endl; /////////////////////////////////
-        } else if (check_in_out(chipsets, other) == 0) {
-            circuit.getComponent(other)->setLink(other_pin, *(circuit.getComponent(comp)), comp_pin);
-        } else {
-            throw std::runtime_error("error in link loop fill circuit"); ////////////////////////
-        }
+        //if (check_in_out(chipsets, other) == 1) {
+        //    circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
+        //    // segfaults here
+        //    //std::cout << "ok" << std::endl; /////////////////////////////////
+        //} else if (check_in_out(chipsets, other) == 0) {
+        //    circuit.getComponent(other)->setLink(other_pin, *(circuit.getComponent(comp)), comp_pin);
+        //} else {
+        //    throw std::runtime_error("error in link loop fill circuit"); ////////////////////////
+        //}
     }
 }
 

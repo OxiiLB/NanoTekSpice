@@ -187,6 +187,14 @@ namespace nts {
                 return ("Pin not exist");
             }
     };
+
+    class ComponentException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("A component does not exist");
+            }
+    };
 }
 
 #endif /* !ERRORHANDLING_HPP_ */

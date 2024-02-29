@@ -15,6 +15,7 @@
 #include "../includes/components/NotComponent.hpp"
 #include "../includes/components/XorComponent.hpp"
 #include "../includes/components/FalseComponent.hpp"
+#include "../ErrorHandling/ErrorHandling.hpp"
 
 nts::ComponentFactory::ComponentFactory()
 {
@@ -39,7 +40,7 @@ std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const st
     if (it != _FunctionTab.end()) {
         return it->second();
     }
-    return nullptr;
+    throw nts::ComponentException();
 }
 
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::createAndComponent() const

@@ -22,6 +22,7 @@
             void run(Circuit &circuit);
             void exit();
             void launch_command(Circuit &circuit);
+            std::pair<std::string, std::size_t> parse_input(std::string input);
 
         protected:
             bool _exit;

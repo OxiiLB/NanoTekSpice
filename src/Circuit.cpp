@@ -94,15 +94,15 @@ void Circuit::display()
         const std::unique_ptr<nts::IComponent> &comp = component.second;
         if (dynamic_cast<nts::InputComponent *>(comp.get())) {
             if (comp->compute(1) == -1)
-                std::cout << name << ": U" << std::endl;
+                std::cout << "  " << name << ": U" << std::endl;
             else
-                std::cout << name << ": " << comp->compute(1) << std::endl;
+                std::cout << "  " << name << ": " << comp->compute(1) << std::endl;
         }
         if (dynamic_cast<nts::ClockComponent *>(comp.get())) {
             if (comp->compute(1) == -1)
-                std::cout << name << ": U" << std::endl;
+                std::cout << "  " << name << ": U" << std::endl;
             else
-                std::cout << name << ": " << comp->compute(1) << std::endl;
+                std::cout << "  " << name << ": " << comp->compute(1) << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
@@ -111,9 +111,9 @@ void Circuit::display()
         const std::unique_ptr<nts::IComponent> &comp = component.second;
         if (dynamic_cast<nts::OutputComponent *>(comp.get())) {
             if (comp->compute(1) == -1)
-                std::cout << name << ": U" << std::endl;
+                std::cout << "  " << name << ": U" << std::endl;
             else
-                std::cout << name << ": " << comp->compute(1) << std::endl;
+                std::cout << "  " << name << ": " << comp->compute(1) << std::endl;
         }
     }
 }

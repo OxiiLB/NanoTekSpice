@@ -7,6 +7,8 @@
 
 #include "../includes/prompt.hpp"
 #include "../includes/Circuit.hpp"
+#include "../includes/components/InputComponent.hpp"
+#include "../ErrorHandling/ErrorHandling.hpp"
 
 prompt::prompt()
 {
@@ -23,6 +25,17 @@ void prompt::exit()
         this->_exit = true;
 }
 
+std::pair<std::string, std::size_t> prompt::parse_input(std::string input)
+{
+    std::size_t pos = input.find("=");
+    if (pos == std::string::npos)
+        throw nts::InvalidCommandException();
+    std::string name = input.substr(0, pos);
+    std::string value = input.substr(pos + 1);
+    return std::make_pair(name, std::stoi(value));
+}
+
+
 void prompt::launch_command(Circuit &circuit)
 {
     if (this->_input == "display")
@@ -33,8 +46,12 @@ void prompt::launch_command(Circuit &circuit)
         this->exit();
     else if (this->_input == "loop")
         this->_isLooping = true;
+    else {
+        std::pair pair = this->parse_input(this->_input);
+        // std::cout << "Setting " << pair.first << " to " << pair.second << std::endl;
+        dynamic_cast<nts::InputComponent *>(circuit.getComponent(pair.first))->setValue(static_cast<nts::Tristate>(pair.second));
+    }
 }
-
 
 void prompt::run(Circuit &circuit)
 {

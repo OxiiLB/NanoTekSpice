@@ -16,6 +16,16 @@ nts::InputComponent::~InputComponent()
 {
 }
 
+void nts::InputComponent::setValue(nts::Tristate value)
+{
+    this->_nextValue = value;
+}
+
+void nts::InputComponent::simulate(std::size_t tick)
+{
+    this->_value = this->_nextValue;
+}
+
 nts::Tristate nts::InputComponent::compute(std::size_t pin)
 {
     if (pin != 1)

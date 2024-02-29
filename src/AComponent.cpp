@@ -26,6 +26,8 @@ void nts::AComponent::setLink(std::size_t pin , nts::IComponent &other, std::siz
         throw nts::SetlinkException();
 }
 
+
+
 std::pair<std::size_t, nts::IComponent *> nts::AComponent::getLink(std::size_t pin) const
 {
     for (size_t i = 0; i != _links.size(); i++) {

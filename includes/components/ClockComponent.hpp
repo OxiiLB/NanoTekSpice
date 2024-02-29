@@ -18,7 +18,7 @@
                 ~ClockComponent();
 
                 nts::Tristate compute(std::size_t pin) override;
-                virtual void simulate(std::size_t tick) override;
+                void simulate(std::size_t tick) override;
 
             // Value
             protected:

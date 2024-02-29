@@ -65,6 +65,7 @@ nts::IComponent *Circuit::getComponent(std::string name)
 
 void Circuit::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
+    std::cout << "Circuit::setLink" << std::endl;
     for (auto &component : this->_components) {
         if (component.second->compute(pin) == nts::Tristate::Undefined) {
             component.second->setLink(pin, other, otherPin);

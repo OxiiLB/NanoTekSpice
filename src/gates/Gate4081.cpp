@@ -6,7 +6,7 @@
 */
 
 #include "../../ErrorHandling/ErrorHandling.hpp"
-#include "Gate4081.hpp"
+#include "../../includes/gates/Gate4081.hpp"
 
 nts::And4::And4()
 {

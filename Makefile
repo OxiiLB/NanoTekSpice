@@ -23,6 +23,7 @@ SRC			=	AComponent.cpp					\
 				gates/Gate4030.cpp				\
 				gates/Gate4069.cpp				\
 				gates/Gate4071.cpp				\
+				gates/Gate4081.cpp				\
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 
@@ -33,7 +34,7 @@ MAIN_SRC	=	main.cpp						\
 				FileHandling/FileHandling.cpp	\
 				Tools/BasicTools.cpp			\
 
-TEST		=	\
+TEST		=	tests.cpp
 
 DIR_TESTS	=	$(addprefix tests/, $(TEST))
 

@@ -112,15 +112,10 @@ static std::string get_comp_name(std::string str)
 
 static std::size_t get_comp_pin_num(std::string str)
 {
-    int i = 0;
-    int res = 0;
-    for (i = 0; str[i] != ' '; i++);
-    for (i = i; str[i] != ':'; i++);
-    i++;
-    if (str[i] < '0' || str[i] > '9')
-        throw nts::ImproperLinkLineException();
-    res = (str[i] - '0');
-    return ((std::size_t)(res));
+    std::string comp_half;
+    comp_half = str.substr(str.find(" ") + 1);
+    comp_half = comp_half.substr(comp_half.find(":") + 1);
+    return ((std::size_t)(std::stoi(comp_half)));
 }
 
 static std::string get_other_name(std::string str)
@@ -135,12 +130,10 @@ static std::string get_other_name(std::string str)
 
 static std::size_t get_other_pin_num(std::string str)
 {
-    int i = 0;
-    int res = 0;
-    for (i = 0; str[i] != ':'; i++);
-    i++;
-    res = (str[i] - '0');
-    return ((std::size_t)(res));
+    std::string first_half;
+    first_half = str.substr(str.find(":"));
+    first_half = first_half.substr(1, first_half.find(" "));
+    return ((std::size_t)(std::stoi(first_half)));
 }
 
 static int check_in_out(std::vector<std::string> chipsets, std::string name)

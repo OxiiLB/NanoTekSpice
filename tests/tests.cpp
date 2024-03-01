@@ -429,6 +429,237 @@ Test(Gate4001, CheckUndefinedUndefined, .init = redirect_all_stdout)
     cr_assert_eq(gate4001.compute(3), nts::Tristate::Undefined);
 }
 
+Test(Gate4001, CheckTrueTrue4, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4001.setLink(5, trueComp1, 1);
+    gate4001.setLink(6, trueComp2, 1);
+    cr_assert_eq(gate4001.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckTrueFalse4, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4001.setLink(5, trueComp1, 1);
+    gate4001.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4001.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckFalseTrue4, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4001.setLink(5, falseComp1, 1);
+    gate4001.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4001.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckFalseFalse4, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4001.setLink(5, falseComp1, 1);
+    gate4001.setLink(6, falseComp2, 1);
+    cr_assert_eq(gate4001.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4001, CheckUndefinedTrue4, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4001.setLink(5, inputComp1, 1);
+    gate4001.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4001.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckUndefinedFalse4, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4001.setLink(5, inputComp1, 1);
+    gate4001.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4001.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckUndefinedUndefined4, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4001.setLink(5, inputComp1, 1);
+    gate4001.setLink(6, inputComp2, 1);
+    cr_assert_eq(gate4001.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckTrueTrue10, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4001.setLink(8, trueComp1, 1);
+    gate4001.setLink(9, trueComp2, 1);
+    cr_assert_eq(gate4001.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckTrueFalse10, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4001.setLink(8, trueComp1, 1);
+    gate4001.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4001.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckFalseTrue10, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4001.setLink(8, falseComp1, 1);
+    gate4001.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4001.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckFalseFalse10, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4001.setLink(8, falseComp1, 1);
+    gate4001.setLink(9, falseComp2, 1);
+    cr_assert_eq(gate4001.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4001, CheckUndefinedTrue10, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4001.setLink(8, inputComp1, 1);
+    gate4001.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4001.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckUndefinedFalse10, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4001.setLink(8, inputComp1, 1);
+    gate4001.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4001.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckUndefinedUndefined10, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4001.setLink(8, inputComp1, 1);
+    gate4001.setLink(9, inputComp2, 1);
+    cr_assert_eq(gate4001.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckTrueTrue11, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4001.setLink(12, trueComp1, 1);
+    gate4001.setLink(13, trueComp2, 1);
+    cr_assert_eq(gate4001.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckTrueFalse11, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4001.setLink(12, trueComp1, 1);
+    gate4001.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4001.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckFalseTrue11, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4001.setLink(12, falseComp1, 1);
+    gate4001.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4001.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4001, CheckFalseFalse11, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4001.setLink(12, falseComp1, 1);
+    gate4001.setLink(13, falseComp2, 1);
+    cr_assert_eq(gate4001.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4001, CheckUndefinedTrue11, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4001.setLink(12, inputComp1, 1);
+    gate4001.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4001.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckUndefinedFalse11, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4001.setLink(12, inputComp1, 1);
+    gate4001.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4001.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4001, CheckUndefinedUndefined11, .init = redirect_all_stdout)
+{
+    nts::Nor gate4001;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4001.setLink(12, inputComp1, 1);
+    gate4001.setLink(13, inputComp2, 1);
+    cr_assert_eq(gate4001.compute(11), nts::Tristate::Undefined);
+}
+
 Test(Gate4011, CheckTrueTrue, .init = redirect_all_stdout)
 {
     nts::Nand gate4011;
@@ -504,6 +735,237 @@ Test(Gate4011, CheckUndefinedUndefined, .init = redirect_all_stdout)
     gate4011.setLink(1, inputComp1, 1);
     gate4011.setLink(2, inputComp2, 1);
     cr_assert_eq(gate4011.compute(3), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckTrueTrue4, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4011.setLink(5, trueComp1, 1);
+    gate4011.setLink(6, trueComp2, 1);
+    cr_assert_eq(gate4011.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4011, CheckTrueFalse4, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4011.setLink(5, trueComp1, 1);
+    gate4011.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4011.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckFalseTrue4, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4011.setLink(5, falseComp1, 1);
+    gate4011.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4011.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckFalseFalse4, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4011.setLink(5, falseComp1, 1);
+    gate4011.setLink(6, falseComp2, 1);
+    cr_assert_eq(gate4011.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckUndefinedTrue4, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4011.setLink(5, inputComp1, 1);
+    gate4011.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4011.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckUndefinedFalse4, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4011.setLink(5, inputComp1, 1);
+    gate4011.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4011.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckUndefinedUndefined4, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4011.setLink(5, inputComp1, 1);
+    gate4011.setLink(6, inputComp2, 1);
+    cr_assert_eq(gate4011.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckTrueTrue10, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4011.setLink(8, trueComp1, 1);
+    gate4011.setLink(9, trueComp2, 1);
+    cr_assert_eq(gate4011.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4011, CheckTrueFalse10, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4011.setLink(8, trueComp1, 1);
+    gate4011.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4011.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckFalseTrue10, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4011.setLink(8, falseComp1, 1);
+    gate4011.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4011.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckFalseFalse10, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4011.setLink(8, falseComp1, 1);
+    gate4011.setLink(9, falseComp2, 1);
+    cr_assert_eq(gate4011.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckUndefinedTrue10, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4011.setLink(8, inputComp1, 1);
+    gate4011.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4011.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckUndefinedFalse10, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4011.setLink(8, inputComp1, 1);
+    gate4011.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4011.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckUndefinedUndefined10, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4011.setLink(8, inputComp1, 1);
+    gate4011.setLink(9, inputComp2, 1);
+    cr_assert_eq(gate4011.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckTrueTrue11, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4011.setLink(12, trueComp1, 1);
+    gate4011.setLink(13, trueComp2, 1);
+    cr_assert_eq(gate4011.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4011, CheckTrueFalse11, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4011.setLink(12, trueComp1, 1);
+    gate4011.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4011.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckFalseTrue11, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4011.setLink(12, falseComp1, 1);
+    gate4011.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4011.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckFalseFalse11, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4011.setLink(12, falseComp1, 1);
+    gate4011.setLink(13, falseComp2, 1);
+    cr_assert_eq(gate4011.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4011, CheckUndefinedTrue11, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4011.setLink(12, inputComp1, 1);
+    gate4011.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4011.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckUndefinedFalse11, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4011.setLink(12, inputComp1, 1);
+    gate4011.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4011.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4011, CheckUndefinedUndefined11, .init = redirect_all_stdout)
+{
+    nts::Nand gate4011;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4011.setLink(12, inputComp1, 1);
+    gate4011.setLink(13, inputComp2, 1);
+    cr_assert_eq(gate4011.compute(11), nts::Tristate::Undefined);
 }
 
 Test(Gate4030, CheckTrueTrue, .init = redirect_all_stdout)
@@ -583,6 +1045,237 @@ Test(Gate4030, CheckUndefinedUndefined, .init = redirect_all_stdout)
     cr_assert_eq(gate4030.compute(3), nts::Tristate::Undefined);
 }
 
+Test(Gate4030, CheckTrueTrue4, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4030.setLink(5, trueComp1, 1);
+    gate4030.setLink(6, trueComp2, 1);
+    cr_assert_eq(gate4030.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4030, CheckTrueFalse4, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4030.setLink(5, trueComp1, 1);
+    gate4030.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4030.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4030, CheckFalseTrue4, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4030.setLink(5, falseComp1, 1);
+    gate4030.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4030.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4030, CheckFalseFalse4, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4030.setLink(5, falseComp1, 1);
+    gate4030.setLink(6, falseComp2, 1);
+    cr_assert_eq(gate4030.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4030, CheckUndefinedTrue4, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4030.setLink(5, inputComp1, 1);
+    gate4030.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4030.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckUndefinedFalse4, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4030.setLink(5, inputComp1, 1);
+    gate4030.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4030.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckUndefinedUndefined4, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4030.setLink(5, inputComp1, 1);
+    gate4030.setLink(6, inputComp2, 1);
+    cr_assert_eq(gate4030.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckTrueTrue10, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4030.setLink(8, trueComp1, 1);
+    gate4030.setLink(9, trueComp2, 1);
+    cr_assert_eq(gate4030.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4030, CheckTrueFalse10, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4030.setLink(8, trueComp1, 1);
+    gate4030.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4030.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4030, CheckFalseTrue10, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4030.setLink(8, falseComp1, 1);
+    gate4030.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4030.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4030, CheckFalseFalse10, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4030.setLink(8, falseComp1, 1);
+    gate4030.setLink(9, falseComp2, 1);
+    cr_assert_eq(gate4030.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4030, CheckUndefinedTrue10, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4030.setLink(8, inputComp1, 1);
+    gate4030.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4030.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckUndefinedFalse10, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4030.setLink(8, inputComp1, 1);
+    gate4030.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4030.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckUndefinedUndefined10, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4030.setLink(8, inputComp1, 1);
+    gate4030.setLink(9, inputComp2, 1);
+    cr_assert_eq(gate4030.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckTrueTrue11, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4030.setLink(12, trueComp1, 1);
+    gate4030.setLink(13, trueComp2, 1);
+    cr_assert_eq(gate4030.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4030, CheckTrueFalse11, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4030.setLink(12, trueComp1, 1);
+    gate4030.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4030.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4030, CheckFalseTrue11, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4030.setLink(12, falseComp1, 1);
+    gate4030.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4030.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4030, CheckFalseFalse11, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4030.setLink(12, falseComp1, 1);
+    gate4030.setLink(13, falseComp2, 1);
+    cr_assert_eq(gate4030.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4030, CheckUndefinedTrue11, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4030.setLink(12, inputComp1, 1);
+    gate4030.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4030.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckUndefinedFalse11, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4030.setLink(12, inputComp1, 1);
+    gate4030.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4030.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4030, CheckUndefinedUndefined11, .init = redirect_all_stdout)
+{
+    nts::Xor4 gate4030;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4030.setLink(12, inputComp1, 1);
+    gate4030.setLink(13, inputComp2, 1);
+    cr_assert_eq(gate4030.compute(11), nts::Tristate::Undefined);
+}
+
 Test(Gate4069, CheckTrue, .init = redirect_all_stdout)
 {
     nts::Inverter gate4069;
@@ -608,6 +1301,141 @@ Test(Gate4069, CheckUndefined, .init = redirect_all_stdout)
 
     gate4069.setLink(1, inputComp1, 1);
     cr_assert_eq(gate4069.compute(2), nts::Tristate::Undefined);
+}
+
+Test(Gate4069, CheckTrue4, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::TrueComponent trueComp1;
+
+    gate4069.setLink(3, trueComp1, 1);
+    cr_assert_eq(gate4069.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4069, CheckFalse4, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::FalseComponent falseComp1;
+
+    gate4069.setLink(3, falseComp1, 1);
+    cr_assert_eq(gate4069.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4069, CheckUndefined4, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::InputComponent inputComp1;
+
+    gate4069.setLink(3, inputComp1, 1);
+    cr_assert_eq(gate4069.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4069, CheckTrue6, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::TrueComponent trueComp1;
+
+    gate4069.setLink(5, trueComp1, 1);
+    cr_assert_eq(gate4069.compute(6), nts::Tristate::False);
+}
+
+Test(Gate4069, CheckFalse6, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::FalseComponent falseComp1;
+
+    gate4069.setLink(5, falseComp1, 1);
+    cr_assert_eq(gate4069.compute(6), nts::Tristate::True);
+}
+
+Test(Gate4069, CheckUndefined6, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::InputComponent inputComp1;
+
+    gate4069.setLink(5, inputComp1, 1);
+    cr_assert_eq(gate4069.compute(6), nts::Tristate::Undefined);
+}
+
+Test(Gate4069, CheckTrue8, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::TrueComponent trueComp1;
+
+    gate4069.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4069.compute(8), nts::Tristate::False);
+}
+
+Test(Gate4069, CheckFalse8, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::FalseComponent falseComp1;
+
+    gate4069.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4069.compute(8), nts::Tristate::True);
+}
+
+Test(Gate4069, CheckUndefined8, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::InputComponent inputComp1;
+
+    gate4069.setLink(9, inputComp1, 1);
+    cr_assert_eq(gate4069.compute(8), nts::Tristate::Undefined);
+}
+
+Test(Gate4069, CheckTrue10, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::TrueComponent trueComp1;
+
+    gate4069.setLink(11, trueComp1, 1);
+    cr_assert_eq(gate4069.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4069, CheckFalse10, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::FalseComponent falseComp1;
+
+    gate4069.setLink(11, falseComp1, 1);
+    cr_assert_eq(gate4069.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4069, CheckUndefined10, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::InputComponent inputComp1;
+
+    gate4069.setLink(11, inputComp1, 1);
+    cr_assert_eq(gate4069.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4069, CheckTrue12, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::TrueComponent trueComp1;
+
+    gate4069.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4069.compute(12), nts::Tristate::False);
+}
+
+Test(Gate4069, CheckFalse12, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::FalseComponent falseComp1;
+
+    gate4069.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4069.compute(12), nts::Tristate::True);
+}
+
+Test(Gate4069, CheckUndefined12, .init = redirect_all_stdout)
+{
+    nts::Inverter gate4069;
+    nts::InputComponent inputComp1;
+
+    gate4069.setLink(13, inputComp1, 1);
+    cr_assert_eq(gate4069.compute(12), nts::Tristate::Undefined);
 }
 
 Test(Gate4071, CheckTrueTrue, .init = redirect_all_stdout)
@@ -687,6 +1515,237 @@ Test(Gate4071, CheckUndefinedUndefined, .init = redirect_all_stdout)
     cr_assert_eq(gate4071.compute(3), nts::Tristate::Undefined);
 }
 
+Test(Gate4071, CheckTrueTrue4, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4071.setLink(5, trueComp1, 1);
+    gate4071.setLink(6, trueComp2, 1);
+    cr_assert_eq(gate4071.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckTrueFalse4, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4071.setLink(5, trueComp1, 1);
+    gate4071.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4071.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckFalseTrue4, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4071.setLink(5, falseComp1, 1);
+    gate4071.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4071.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckFalseFalse4, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4071.setLink(5, falseComp1, 1);
+    gate4071.setLink(6, falseComp2, 1);
+    cr_assert_eq(gate4071.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4071, CheckUndefinedTrue4, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4071.setLink(5, inputComp1, 1);
+    gate4071.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4071.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckUndefinedFalse4, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4071.setLink(5, inputComp1, 1);
+    gate4071.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4071.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4071, CheckUndefinedUndefined4, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4071.setLink(5, inputComp1, 1);
+    gate4071.setLink(6, inputComp2, 1);
+    cr_assert_eq(gate4071.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4071, CheckTrueTrue10, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4071.setLink(8, trueComp1, 1);
+    gate4071.setLink(9, trueComp2, 1);
+    cr_assert_eq(gate4071.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckTrueFalse10, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4071.setLink(8, trueComp1, 1);
+    gate4071.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4071.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckFalseTrue10, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4071.setLink(8, falseComp1, 1);
+    gate4071.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4071.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckFalseFalse10, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4071.setLink(8, falseComp1, 1);
+    gate4071.setLink(9, falseComp2, 1);
+    cr_assert_eq(gate4071.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4071, CheckUndefinedTrue10, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4071.setLink(8, inputComp1, 1);
+    gate4071.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4071.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckUndefinedFalse10, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4071.setLink(8, inputComp1, 1);
+    gate4071.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4071.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4071, CheckUndefinedUndefined10, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4071.setLink(8, inputComp1, 1);
+    gate4071.setLink(9, inputComp2, 1);
+    cr_assert_eq(gate4071.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4071, CheckTrueTrue11, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4071.setLink(12, trueComp1, 1);
+    gate4071.setLink(13, trueComp2, 1);
+    cr_assert_eq(gate4071.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckTrueFalse11, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4071.setLink(12, trueComp1, 1);
+    gate4071.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4071.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckFalseTrue11, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4071.setLink(12, falseComp1, 1);
+    gate4071.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4071.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckFalseFalse11, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4071.setLink(12, falseComp1, 1);
+    gate4071.setLink(13, falseComp2, 1);
+    cr_assert_eq(gate4071.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4071, CheckUndefinedTrue11, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4071.setLink(12, inputComp1, 1);
+    gate4071.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4071.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4071, CheckUndefinedFalse11, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4071.setLink(12, inputComp1, 1);
+    gate4071.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4071.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4071, CheckUndefinedUndefined11, .init = redirect_all_stdout)
+{
+    nts::Or4 gate4071;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4071.setLink(12, inputComp1, 1);
+    gate4071.setLink(13, inputComp2, 1);
+    cr_assert_eq(gate4071.compute(11), nts::Tristate::Undefined);
+}
+
 Test(Gate4081, CheckTrueTrue, .init = redirect_all_stdout)
 {
     nts::And4 gate4081;
@@ -762,4 +1821,235 @@ Test(Gate4081, CheckUndefinedUndefined, .init = redirect_all_stdout)
     gate4081.setLink(1, inputComp1, 1);
     gate4081.setLink(2, inputComp2, 1);
     cr_assert_eq(gate4081.compute(3), nts::Tristate::Undefined);
+}
+
+Test(Gate4081, CheckTrueTrue4, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4081.setLink(5, trueComp1, 1);
+    gate4081.setLink(6, trueComp2, 1);
+    cr_assert_eq(gate4081.compute(4), nts::Tristate::True);
+}
+
+Test(Gate4081, CheckTrueFalse4, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4081.setLink(5, trueComp1, 1);
+    gate4081.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4081.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckFalseTrue4, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4081.setLink(5, falseComp1, 1);
+    gate4081.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4081.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckFalseFalse4, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4081.setLink(5, falseComp1, 1);
+    gate4081.setLink(6, falseComp2, 1);
+    cr_assert_eq(gate4081.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckUndefinedTrue4, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4081.setLink(5, inputComp1, 1);
+    gate4081.setLink(6, trueComp1, 1);
+    cr_assert_eq(gate4081.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4081, CheckUndefinedFalse4, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4081.setLink(5, inputComp1, 1);
+    gate4081.setLink(6, falseComp1, 1);
+    cr_assert_eq(gate4081.compute(4), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckUndefinedUndefined4, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4081.setLink(5, inputComp1, 1);
+    gate4081.setLink(6, inputComp2, 1);
+    cr_assert_eq(gate4081.compute(4), nts::Tristate::Undefined);
+}
+
+Test(Gate4081, CheckTrueTrue10, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4081.setLink(8, trueComp1, 1);
+    gate4081.setLink(9, trueComp2, 1);
+    cr_assert_eq(gate4081.compute(10), nts::Tristate::True);
+}
+
+Test(Gate4081, CheckTrueFalse10, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4081.setLink(8, trueComp1, 1);
+    gate4081.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4081.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckFalseTrue10, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4081.setLink(8, falseComp1, 1);
+    gate4081.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4081.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckFalseFalse10, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4081.setLink(8, falseComp1, 1);
+    gate4081.setLink(9, falseComp2, 1);
+    cr_assert_eq(gate4081.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckUndefinedTrue10, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4081.setLink(8, inputComp1, 1);
+    gate4081.setLink(9, trueComp1, 1);
+    cr_assert_eq(gate4081.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4081, CheckUndefinedFalse10, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4081.setLink(8, inputComp1, 1);
+    gate4081.setLink(9, falseComp1, 1);
+    cr_assert_eq(gate4081.compute(10), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckUndefinedUndefined10, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4081.setLink(8, inputComp1, 1);
+    gate4081.setLink(9, inputComp2, 1);
+    cr_assert_eq(gate4081.compute(10), nts::Tristate::Undefined);
+}
+
+Test(Gate4081, CheckTrueTrue11, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::TrueComponent trueComp1;
+    nts::TrueComponent trueComp2;
+
+    gate4081.setLink(12, trueComp1, 1);
+    gate4081.setLink(13, trueComp2, 1);
+    cr_assert_eq(gate4081.compute(11), nts::Tristate::True);
+}
+
+Test(Gate4081, CheckTrueFalse11, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::TrueComponent trueComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4081.setLink(12, trueComp1, 1);
+    gate4081.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4081.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckFalseTrue11, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::FalseComponent falseComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4081.setLink(12, falseComp1, 1);
+    gate4081.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4081.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckFalseFalse11, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::FalseComponent falseComp1;
+    nts::FalseComponent falseComp2;
+
+    gate4081.setLink(12, falseComp1, 1);
+    gate4081.setLink(13, falseComp2, 1);
+    cr_assert_eq(gate4081.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckUndefinedTrue11, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::TrueComponent trueComp1;
+
+    gate4081.setLink(12, inputComp1, 1);
+    gate4081.setLink(13, trueComp1, 1);
+    cr_assert_eq(gate4081.compute(11), nts::Tristate::Undefined);
+}
+
+Test(Gate4081, CheckUndefinedFalse11, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::FalseComponent falseComp1;
+
+    gate4081.setLink(12, inputComp1, 1);
+    gate4081.setLink(13, falseComp1, 1);
+    cr_assert_eq(gate4081.compute(11), nts::Tristate::False);
+}
+
+Test(Gate4081, CheckUndefinedUndefined11, .init = redirect_all_stdout)
+{
+    nts::And4 gate4081;
+    nts::InputComponent inputComp1;
+    nts::InputComponent inputComp2;
+
+    gate4081.setLink(12, inputComp1, 1);
+    gate4081.setLink(13, inputComp2, 1);
+    cr_assert_eq(gate4081.compute(11), nts::Tristate::Undefined);
 }

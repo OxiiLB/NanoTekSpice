@@ -16,6 +16,7 @@
 #include "../includes/components/XorComponent.hpp"
 #include "../includes/components/FalseComponent.hpp"
 #include "../ErrorHandling/ErrorHandling.hpp"
+#include "../includes/gates/Gate4001.hpp"
 
 nts::ComponentFactory::ComponentFactory()
 {
@@ -28,6 +29,7 @@ nts::ComponentFactory::ComponentFactory()
     _FunctionTab["output"] = [this](){ return createOutputComponent(); };
     _FunctionTab["true"] = [this](){ return createTrueComponent(); };
     _FunctionTab["false"] = [this](){ return createFalseComponent(); };
+    _FunctionTab["nor"] = [this](){ return createNorGate(); };
 }
 
 nts::ComponentFactory::~ComponentFactory()
@@ -41,6 +43,11 @@ std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const st
         return it->second();
     }
     throw nts::ComponentException();
+}
+
+std::unique_ptr<nts::IComponent> nts::ComponentFactory::createNorGate() const
+{
+    return std::make_unique<nts::Nor>();
 }
 
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::createAndComponent() const

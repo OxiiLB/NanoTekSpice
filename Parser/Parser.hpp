@@ -17,7 +17,7 @@
     #include "../includes/Circuit.hpp"
 
     static char comp_type_array[10][10] = {
-        "clock", "and", "or", "xor", "not",
+        "clock", "and", "xor", "or", "not",
         "input", "output", "false", "true"
     };
 

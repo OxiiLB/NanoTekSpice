@@ -31,6 +31,7 @@
                 std::unique_ptr<IComponent> createOutputComponent() const;
                 std::unique_ptr<IComponent> createNotComponent() const;
                 std::unique_ptr<IComponent> createXorComponent() const;
+                std::unique_ptr<IComponent> createNorGate() const;
 
             protected:
                 std::unordered_map<std::string, std::function<std::unique_ptr<IComponent>()>> _FunctionTab;

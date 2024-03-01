@@ -78,9 +78,10 @@ static char **get_array(const std::string &file_str, const char *section) {
 static int get_comp_type(char *str)
 {
     int i = 0;
-    for (i = 0; i < 21; i++) {
-        if (strstr(str, comp_type_array[i]) != NULL)
+    for (i = 0; comp_type_array[i] != NULL; i++) {
+        if (strstr(str, comp_type_array[i]) != NULL) {
             return i;
+        }
     }
     return -1;
 }

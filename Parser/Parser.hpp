@@ -16,6 +16,8 @@
     #include <iostream>
     #include "../includes/Circuit.hpp"
 
+    static int array_size = 11;
+
     static char comp_type_name_array[11][10] = {
         "clock", "and", "xor", "or", "not",
         "input", "output", "false", "true",

@@ -66,7 +66,7 @@ static void get_array(std::vector<std::string> &vector, const std::string &file_
 static int get_comp_type(std::string str)
 {
     int i = 0;
-    for (i = 0; i < 9; i++) {
+    for (i = 0; i < array_size; i++) {
         if (str.find(comp_type_name_array[i]) != std::string::npos)
             return i;
     }

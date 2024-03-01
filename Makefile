@@ -22,6 +22,7 @@ SRC			=	AComponent.cpp					\
 				gates/Gate4011.cpp				\
 				gates/Gate4030.cpp				\
 				gates/Gate4069.cpp				\
+				gates/Gate4071.cpp				\
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 

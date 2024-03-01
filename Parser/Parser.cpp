@@ -69,7 +69,6 @@ static int get_comp_type(std::string str)
     for (i = 0; i < 9; i++) {
         if (str.find(comp_type_name_array[i]) != std::string::npos)
             return i;
-        }
     }
     return -1;
 }

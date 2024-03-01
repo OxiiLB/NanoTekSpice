@@ -16,9 +16,10 @@ SRC			=	AComponent.cpp					\
 				components/NotComponent.cpp		\
 				components/OrComponent.cpp		\
 				components/XorComponent.cpp		\
-				gates/Gate4001.cpp				\
 				ComponentFactory.cpp			\
 				prompt.cpp						\
+				gates/Gate4001.cpp				\
+				gates/Gate4011.cpp				\
 
 DIR_SRC		=	$(addprefix src/, $(SRC))
 

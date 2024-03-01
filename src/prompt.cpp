@@ -102,7 +102,7 @@ void prompt::run(Circuit &circuit)
         this->loop(circuit);
         std::cout << "> ";
         if (!std::getline(std::cin, this->_input) && std::cin.eof())
-            this->exit();
+            break;
         this->launch_command(circuit);
     }
 }

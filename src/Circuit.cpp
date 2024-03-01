@@ -116,10 +116,12 @@ void Circuit::display()
         const std::string &name = component.first;
         const std::unique_ptr<nts::IComponent> &comp = component.second;
         if (dynamic_cast<nts::OutputComponent *>(comp.get())) {
-            if (comp->compute(1) == -1)
+            if (comp->compute(1) == -1) {
                 std::cout << "  " << name << ": U" << std::endl;
-            else
+            }
+            else {
                 std::cout << "  " << name << ": " << comp->compute(1) << std::endl;
+            }
         }
     }
 }

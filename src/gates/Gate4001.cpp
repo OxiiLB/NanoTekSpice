@@ -18,7 +18,6 @@ nts::Nor::~Nor()
 
 nts::Tristate nts::Nor::compute(std::size_t pin)
 {
-    std::cout << "pin: " << pin << std::endl;
     if (pin == 3) {
         nts::Tristate a = this->_links[0].second->compute(this->_links[0].first);
         nts::Tristate b = this->_links[1].second->compute(this->_links[1].first);

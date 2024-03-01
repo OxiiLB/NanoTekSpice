@@ -28,7 +28,6 @@ void prompt::exit()
     this->_exit = true;
 }
 
-
 std::pair<std::string, nts::Tristate> prompt::parse_input(std::string input)
 {
     std::size_t pos = input.find("=");

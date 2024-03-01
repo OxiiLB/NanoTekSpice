@@ -24,7 +24,6 @@
             void launch_command(Circuit &circuit);
             std::pair<std::string, nts::Tristate> parse_input(std::string input);
             bool getExit() const { return this->_exit; };
-            void handleSignal(int signal);
             void loop(Circuit &circuit);
 
         protected:

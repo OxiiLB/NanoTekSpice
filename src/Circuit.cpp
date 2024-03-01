@@ -76,6 +76,12 @@ void Circuit::simulate(std::size_t tick)
     }
 }
 
+std::pair<std::size_t, nts::IComponent *> Circuit::getLink(std::size_t pin) const
+{
+    return std::pair<std::size_t, nts::IComponent *>(0, nullptr);
+}
+
+
 nts::Tristate Circuit::compute(std::size_t pin)
 {
     for (const auto &component : this->_components) {

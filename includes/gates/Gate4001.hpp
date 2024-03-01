@@ -1,12 +1,12 @@
 /*
 ** EPITECH PROJECT, 2024
-** Nor.hpp
+** Gate4001.hpp
 ** File description:
-** Nor.hpp
+** Gate4001.hpp
 */
 
-#ifndef NOR_HPP_
-    #define NOR_HPP_
+#ifndef Gate4001_HPP_
+    #define Gate4001_HPP_
 
     #include "../AComponent.hpp"
 
@@ -21,4 +21,4 @@
         };
     }
 
-#endif /* !NOR_HPP_ */
+#endif /* !Gate4001_HPP_ */

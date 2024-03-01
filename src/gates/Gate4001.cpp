@@ -5,7 +5,7 @@
 ** Nor
 */
 
-#include "../../includes/gates/Nor.hpp"
+#include "../../includes/gates/Gate4001.hpp"
 #include "../../ErrorHandling/ErrorHandling.hpp"
 
 nts::Nor::Nor()

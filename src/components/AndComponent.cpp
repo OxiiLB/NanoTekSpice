@@ -29,5 +29,4 @@ nts::Tristate nts::AndComponent::compute(std::size_t pin)
             return nts::Tristate::Undefined;
     }
     throw nts::PinException();
-    return nts::Tristate::Undefined;
 }

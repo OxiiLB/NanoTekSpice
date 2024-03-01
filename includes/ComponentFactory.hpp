@@ -33,6 +33,8 @@
                 std::unique_ptr<IComponent> createXorComponent() const;
                 std::unique_ptr<IComponent> createNorGate() const;
                 std::unique_ptr<IComponent> createNandGate() const;
+                std::unique_ptr<IComponent> createInverterGate() const;
+                std::unique_ptr<IComponent> create4030Gate() const;
 
             protected:
                 std::unordered_map<std::string, std::function<std::unique_ptr<IComponent>()>> _FunctionTab;

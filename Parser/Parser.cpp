@@ -41,13 +41,8 @@ static int get_section_size(const std::string &file_str, const char *section)
     return size;
 }
 
-static char **get_array(const std::string &file_str, const char *section) {
-    int i = 0;
-    int j = 0;
-    int size = get_section_size(file_str, section);
-    char **array = (char **)malloc(sizeof(char *) * (size + 1));
-    if (!array)
-        throw nts::MallocFailedException();
+static void get_array(std::vector<std::string> &vector, const std::string &file_str, std::string section)
+{
     std::size_t position = file_str.find(section);
     if (position == std::string::npos)
         throw nts::InvalidSectionFormatException();
@@ -55,63 +50,55 @@ static char **get_array(const std::string &file_str, const char *section) {
     for (pos = pos; file_str[pos] != '\n'; pos++);
     pos++;
     for (pos = pos; file_str[pos] != '.' && file_str[pos] != '\0'; pos++) {
-        array[i] = (char *)malloc(sizeof(char) * 100);
-        if (!array[i])
-            throw nts::MallocFailedException();
-        j = 0;
-        while (file_str[pos] != '\n' && file_str[pos] != '#' && file_str[pos] != '\0') {
-            array[i][j++] = file_str[pos++];
+        std::string str;
+        for (pos = pos; file_str[pos] != '\n' && file_str[pos] != '#' && file_str[pos] != '\0'; pos++) {
+            str += file_str[pos];
         }
-        array[i][j] = '\0';
-        if (file_str[pos] == '\n' || file_str[pos] == '#') {
-            i++;
-        }
+        vector.push_back(str);
         if (file_str[pos] == '\0')
             throw nts::InvalidSectionFormatException();
         if (file_str[pos + 1] == '\0')
             break;
+        str.clear();
     }
-    array[i] = NULL;
-    return array;
 }
 
-static int get_comp_type(char *str)
+static int get_comp_type(std::string str)
 {
     int i = 0;
-    for (i = 0; i < 21; i++) {
-        if (strstr(str, comp_type_array[i]) != NULL)
+    for (i = 0; i < 9; i++) {
+        if (str.find(comp_type_array[i]) != std::string::npos)
             return i;
     }
     return -1;
 }
 
-static char *get_name(char *name, char *str)
+static std::string get_name(std::string name, std::string str)
 {
     int i = 0;
     int j = 0;
     for (i = 0; str[i] != ' '; i++);
     i++;
     for (i = i; str[i] != '\0'; i++) {
-        name[j] = str[i];
+        name += str[i];
         j++;
     }
-    name[j] = '\0';
     return name;
 }
 
-void check_if_name_repeated(char **chipsets, char *comp_name)
+void check_if_name_repeated(std::vector<std::string> &chipsets, std::string comp_name)
 {
     int i = 0;
     int count = 0;
-    for (i = 0; chipsets[i] != NULL; i++) {
-        if (strstr(chipsets[i], comp_name) != NULL)
+    for (i = 0; i < chipsets.size(); i++) {
+        if (chipsets[i] == comp_name)
             count++;
     }
     if (count > 1)
         throw nts::RepeatNameException();
 }
 
-static std::string get_comp_name(char *str)
+static std::string get_comp_name(std::string str)
 {
     int i = 0;
     std::string name;
@@ -123,7 +110,7 @@ static std::string get_comp_name(char *str)
     return name;
 }
 
-static std::size_t get_comp_pin_num(char *str)
+static std::size_t get_comp_pin_num(std::string str)
 {
     int i = 0;
     int res = 0;
@@ -136,7 +123,7 @@ static std::size_t get_comp_pin_num(char *str)
     return ((std::size_t)(res));
 }
 
-static std::string get_other_name(char *str)
+static std::string get_other_name(std::string str)
 {
     int i = 0;
     std::string name;
@@ -146,7 +133,7 @@ static std::string get_other_name(char *str)
     return name;
 }
 
-static std::size_t get_other_pin_num(char *str)
+static std::size_t get_other_pin_num(std::string str)
 {
     int i = 0;
     int res = 0;
@@ -156,17 +143,17 @@ static std::size_t get_other_pin_num(char *str)
     return ((std::size_t)(res));
 }
 
-static int check_in_out(char **chipsets, std::string name)
+static int check_in_out(std::vector<std::string> chipsets, std::string name)
 {
-    for (int i = 0; chipsets[i] != NULL; i++) {
-        if (strstr(chipsets[i], name.c_str()) != NULL) {
-            if (strstr(chipsets[i], "clock") != NULL)
+    for (int i = 0; i < chipsets.size(); i++) {
+        if (chipsets[i].find(name) != std::string::npos) {
+            if (chipsets[i].find("clock") != std::string::npos)
                 return 2;
-            if (strstr(chipsets[i], "input") != NULL ||
-                strstr(chipsets[i], "true") != NULL ||
-                strstr(chipsets[i], "false") != NULL)
+            if (chipsets[i].find("input") != std::string::npos ||
+                chipsets[i].find("true") != std::string::npos ||
+                chipsets[i].find("false") != std::string::npos)
                 return 1;
-            if (strstr(chipsets[i], "output") != NULL)
+            if (chipsets[i].find("output") != std::string::npos)
                 return 0;
         }
     }
@@ -179,37 +166,16 @@ void check_comp_name_exists(Circuit &circuit, std::string comp_n)
         throw nts::InexistentComponentNameException();
 }
 
-// void check_if_comp_connected(Circuit &circuit, char **chipsets, char **links)
-// {
-//     int i = 0;
-//     int type = 0;
-//     std::size_t pin_num = 0;
-//     std::string comp_type;
-//     char *gate_name = (char *)malloc(sizeof(char) * 20);
-//     for (i = 0; chipsets[i] != NULL; i++) {
-//         type = get_comp_type(chipsets[i]);
-//         comp_type = comp_type_array[type];
-//         if (comp_type == "and" || comp_type == "or" || comp_type == "xor" || comp_type == "not") {
-//             gate_name = get_name(gate_name, chipsets[i]);
-//             pin_num = get_comp_pin_num(links[i]);
-//             if (circuit.getComponent(gate_name)->getLink(pin_num).second == nullptr)
-//                 throw nts::GateNotConnectedException();
-//         }
-//     }
-//     free(gate_name);
-// }
-
-void fill_circuit(Circuit &circuit, char **chipsets, char **links)
+void fill_circuit(Circuit &circuit, std::vector<std::string> &chipsets, std::vector<std::string> &links)
 {
     int i = 0;
     int j = 0;
     std::size_t comp_pin = 0;
     std::size_t other_pin = 0;
-    std::string comp_n;
-    std::string other_n;
+    std::string comp_name;
+    std::string other_name;
     nts::ComponentFactory factory;
-    for (i = 0; chipsets[i + 1] != NULL; i++) {
-        char *comp_name = (char *)malloc(sizeof(char) * 20);
+    for (i = 0; i < (chipsets.size() - 1); i++) {
         j = get_comp_type(chipsets[i]);
         if (j == -1)
             throw nts::InvalidComponentException();
@@ -217,26 +183,25 @@ void fill_circuit(Circuit &circuit, char **chipsets, char **links)
         check_if_name_repeated(chipsets, comp_name);
         std::unique_ptr<nts::IComponent> comp = factory.createComponent(comp_type_array[j]);
         circuit.addComponent(comp_name, comp);
-        comp_name = NULL;
-        free(comp_name);
+        comp_name.clear();
     }
-    for (i = 0; links[i] != NULL; i++) {
-        comp_n = get_comp_name(links[i]);
-        check_comp_name_exists(circuit, comp_n);
+    comp_name.clear();
+    for (i = 0; i < links.size(); i++) {
+        comp_name = get_comp_name(links[i]);
+        check_comp_name_exists(circuit, comp_name);
         comp_pin = get_comp_pin_num(links[i]);
-        other_n = get_other_name(links[i]);
+        other_name = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
-        if (comp_n == other_n)
+        if (comp_name == other_name)
             throw nts::SelfLinkException();
-        if (check_in_out(chipsets, other_n) == 1 || check_in_out(chipsets, other_n) == 2) {
-           circuit.getComponent(comp_n)->setLink(comp_pin, *(circuit.getComponent(other_n)), other_pin);
-        } else if (check_in_out(chipsets, other_n) == 0) {
-           circuit.getComponent(other_n)->setLink(other_pin, *(circuit.getComponent(comp_n)), comp_pin);
+        if (check_in_out(chipsets, other_name) == 1 || check_in_out(chipsets, other_name) == 2) {
+           circuit.getComponent(comp_name)->setLink(comp_pin, *(circuit.getComponent(other_name)), other_pin);
+        } else if (check_in_out(chipsets, other_name) == 0) {
+           circuit.getComponent(other_name)->setLink(other_pin, *(circuit.getComponent(comp_name)), comp_pin);
         } else {
            throw std::runtime_error("Error in link loop in fill circuit");
         }
     }
-    // check_if_comp_connected(circuit, chipsets, links);
 }
 
 void parse_file(Circuit &circuit, const std::string &file_name)
@@ -244,13 +209,12 @@ void parse_file(Circuit &circuit, const std::string &file_name)
     std::string file_str = nts::get_file_content(file_name);
     if (file_str.empty())
         throw nts::FileNotFoundException();
-    char **chipsets = get_array(file_str, ".chipsets:");
-    if (!chipsets)
-        throw nts::FailedToGet2DArrayException();
-    char **links = get_array(file_str, ".links:");
-    if (!links)
-        throw nts::FailedToGet2DArrayException();
+
+    std::vector<std::string> chipsets;
+    get_array(chipsets, file_str, ".chipsets:");
+
+    std::vector<std::string> links;
+    get_array(links, file_str, ".links:");
+
     fill_circuit(circuit, chipsets, links);
-    free_2d_array(chipsets);
-    free_2d_array(links);
 }

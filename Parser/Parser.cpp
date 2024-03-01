@@ -99,6 +99,18 @@ static char *get_name(char *name, char *str)
     return name;
 }
 
+void check_if_name_repeated(char **chipsets, char *comp_name)
+{
+    int i = 0;
+    int count = 0;
+    for (i = 0; chipsets[i] != NULL; i++) {
+        if (strstr(chipsets[i], comp_name) != NULL)
+            count++;
+    }
+    if (count > 1)
+        throw nts::RepeatNameException();
+}
+
 static std::string get_comp_name(char *str)
 {
     int i = 0;
@@ -118,6 +130,8 @@ static std::size_t get_comp_pin_num(char *str)
     for (i = 0; str[i] != ' '; i++);
     for (i = i; str[i] != ':'; i++);
     i++;
+    if (str[i] < '0' || str[i] > '9')
+        throw nts::ImproperLinkLineException();
     res = (str[i] - '0');
     return ((std::size_t)(res));
 }
@@ -159,37 +173,70 @@ static int check_in_out(char **chipsets, std::string name)
     return -1;
 }
 
+void check_comp_name_exists(Circuit &circuit, std::string comp_n)
+{
+    if (circuit.getComponent(comp_n) == NULL)
+        throw nts::InexistentComponentNameException();
+}
+
+// void check_if_comp_connected(Circuit &circuit, char **chipsets, char **links)
+// {
+//     int i = 0;
+//     int type = 0;
+//     std::size_t pin_num = 0;
+//     std::string comp_type;
+//     char *gate_name = (char *)malloc(sizeof(char) * 20);
+//     for (i = 0; chipsets[i] != NULL; i++) {
+//         type = get_comp_type(chipsets[i]);
+//         comp_type = comp_type_array[type];
+//         if (comp_type == "and" || comp_type == "or" || comp_type == "xor" || comp_type == "not") {
+//             gate_name = get_name(gate_name, chipsets[i]);
+//             pin_num = get_comp_pin_num(links[i]);
+//             if (circuit.getComponent(gate_name)->getLink(pin_num).second == nullptr)
+//                 throw nts::GateNotConnectedException();
+//         }
+//     }
+//     free(gate_name);
+// }
+
 void fill_circuit(Circuit &circuit, char **chipsets, char **links)
 {
     int i = 0;
     int j = 0;
     std::size_t comp_pin = 0;
     std::size_t other_pin = 0;
-    std::string comp;
-    std::string other;
+    std::string comp_n;
+    std::string other_n;
     nts::ComponentFactory factory;
     for (i = 0; chipsets[i + 1] != NULL; i++) {
         char *comp_name = (char *)malloc(sizeof(char) * 20);
         j = get_comp_type(chipsets[i]);
+        if (j == -1)
+            throw nts::InvalidComponentException();
         comp_name = get_name(comp_name, chipsets[i]);
+        check_if_name_repeated(chipsets, comp_name);
         std::unique_ptr<nts::IComponent> comp = factory.createComponent(comp_type_array[j]);
         circuit.addComponent(comp_name, comp);
         comp_name = NULL;
         free(comp_name);
     }
     for (i = 0; links[i] != NULL; i++) {
-        comp = get_comp_name(links[i]);
+        comp_n = get_comp_name(links[i]);
+        check_comp_name_exists(circuit, comp_n);
         comp_pin = get_comp_pin_num(links[i]);
-        other = get_other_name(links[i]);
+        other_n = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
-        if (check_in_out(chipsets, other) == 1 || check_in_out(chipsets, other) == 2) {
-           circuit.getComponent(comp)->setLink(comp_pin, *(circuit.getComponent(other)), other_pin);
-        } else if (check_in_out(chipsets, other) == 0) {
-           circuit.getComponent(other)->setLink(other_pin, *(circuit.getComponent(comp)), comp_pin);
+        if (comp_n == other_n)
+            throw nts::SelfLinkException();
+        if (check_in_out(chipsets, other_n) == 1 || check_in_out(chipsets, other_n) == 2) {
+           circuit.getComponent(comp_n)->setLink(comp_pin, *(circuit.getComponent(other_n)), other_pin);
+        } else if (check_in_out(chipsets, other_n) == 0) {
+           circuit.getComponent(other_n)->setLink(other_pin, *(circuit.getComponent(comp_n)), comp_pin);
         } else {
            throw std::runtime_error("Error in link loop in fill circuit");
         }
     }
+    // check_if_comp_connected(circuit, chipsets, links);
 }
 
 void parse_file(Circuit &circuit, const std::string &file_name)

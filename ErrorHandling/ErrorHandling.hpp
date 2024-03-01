@@ -91,7 +91,7 @@ namespace nts {
             }
     };
 
-    class InexistantComponentNameException : public std::exception {
+    class InexistentComponentNameException : public std::exception {
         public:
             const char *what() const noexcept override
             {
@@ -104,14 +104,6 @@ namespace nts {
             const char *what() const noexcept override
             {
                 return ("Cant link a component to itself");
-            }
-    };
-
-    class SpecialGateForbiddenException : public std::exception {
-        public:
-            const char *what() const noexcept override
-            {
-                return ("Gate cannot be a special component");
             }
     };
 
@@ -136,14 +128,6 @@ namespace nts {
             const char *what() const noexcept override
             {
                 return ("No output found");
-            }
-    };
-
-    class ImproperChipsetLineException : public std::exception {
-        public:
-            const char *what() const noexcept override
-            {
-                return ("Improper chipset line");
             }
     };
 
@@ -184,7 +168,7 @@ namespace nts {
         public:
             const char *what() const noexcept override
             {
-                return ("Pin not exist");
+                return ("Pin does not exist");
             }
     };
 

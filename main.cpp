@@ -33,7 +33,6 @@ int main (int ac, char **av)
             throw nts::NoFileException();
         } else {
             check_config_file(av[1]);
-            // check_command_line();
         }
         parse_file(circuit, av[1]);
         prompt.run(circuit);
@@ -43,4 +42,5 @@ int main (int ac, char **av)
     }
     return 0;
 }
+
 

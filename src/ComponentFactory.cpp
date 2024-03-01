@@ -5,6 +5,7 @@
 ** CreateComponent
 */
 
+#include "../ErrorHandling/ErrorHandling.hpp"
 #include "../includes/ComponentFactory.hpp"
 #include "../includes/components/AndComponent.hpp"
 #include "../includes/components/OrComponent.hpp"
@@ -15,8 +16,9 @@
 #include "../includes/components/NotComponent.hpp"
 #include "../includes/components/XorComponent.hpp"
 #include "../includes/components/FalseComponent.hpp"
-#include "../ErrorHandling/ErrorHandling.hpp"
 #include "../includes/gates/Gate4001.hpp"
+#include "../includes/gates/Gate4011.hpp"
+
 
 nts::ComponentFactory::ComponentFactory()
 {
@@ -30,6 +32,7 @@ nts::ComponentFactory::ComponentFactory()
     _FunctionTab["true"] = [this](){ return createTrueComponent(); };
     _FunctionTab["false"] = [this](){ return createFalseComponent(); };
     _FunctionTab["nor"] = [this](){ return createNorGate(); };
+    _FunctionTab["nand"] = [this](){ return createNorGate(); };
 }
 
 nts::ComponentFactory::~ComponentFactory()
@@ -48,6 +51,11 @@ std::unique_ptr<nts::IComponent> nts::ComponentFactory::createComponent(const st
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::createNorGate() const
 {
     return std::make_unique<nts::Nor>();
+}
+
+std::unique_ptr<nts::IComponent> nts::ComponentFactory::createNandGate() const
+{
+    return std::make_unique<nts::Nand>();
 }
 
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::createAndComponent() const

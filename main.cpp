@@ -34,7 +34,8 @@ int main (int ac, char **av)
         } else {
             check_config_file(av[1]);
         }
-        parse_file(circuit, av[1]);
+        if (parse_file(circuit, av[1]) == 84)
+            return 84;
         prompt.run(circuit);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;

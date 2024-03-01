@@ -204,7 +204,7 @@ void fill_circuit(Circuit &circuit, std::vector<std::string> &chipsets, std::vec
     }
 }
 
-void parse_file(Circuit &circuit, const std::string &file_name)
+int parse_file(Circuit &circuit, const std::string &file_name)
 {
     std::string file_str = nts::get_file_content(file_name);
     if (file_str.empty())
@@ -216,5 +216,11 @@ void parse_file(Circuit &circuit, const std::string &file_name)
     std::vector<std::string> links;
     get_array(links, file_str, ".links:");
 
-    fill_circuit(circuit, chipsets, links);
+    try {
+        fill_circuit(circuit, chipsets, links);
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    }
+    return 0;
 }

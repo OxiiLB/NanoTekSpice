@@ -8,6 +8,7 @@
 #include "../includes/prompt.hpp"
 #include "../includes/Circuit.hpp"
 #include "../includes/components/InputComponent.hpp"
+#include "../includes/components/ClockComponent.hpp"
 #include "../ErrorHandling/ErrorHandling.hpp"
 #include <csignal>
 
@@ -61,8 +62,11 @@ void prompt::launch_command(Circuit &circuit)
         try {
             std::pair pair = this->parse_input(this->_input);
             nts::InputComponent *inputComp = dynamic_cast<nts::InputComponent *>(circuit.getComponent(pair.first));
+            nts::ClockComponent *clockComp = dynamic_cast<nts::ClockComponent *>(circuit.getComponent(pair.first));
             if (inputComp != nullptr) {
                 inputComp->setValue(pair.second);
+            } else if (clockComp != nullptr) {
+                clockComp->setValue(pair.second);
             } else {
                 std::cerr << "Component " << pair.first << " is not an input" << std::endl;
             }

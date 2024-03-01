@@ -11,20 +11,25 @@
 nts::ClockComponent::ClockComponent()
 {
     this->_value = nts::Tristate::Undefined;
+    this->_nextValue = nts::Tristate::Undefined;
 }
 
 nts::ClockComponent::~ClockComponent()
 {
 }
 
+void nts::ClockComponent::setValue(nts::Tristate value)
+{
+    this->_nextValue = value;
+}
+
 void nts::ClockComponent::simulate(std::size_t tick)
 {
-    if (tick == 0)
-        this->_value = nts::Tristate::Undefined;
-    else if (tick % 2 == 0)
-        this->_value = nts::Tristate::True;
-    else
-        this->_value = nts::Tristate::False;
+    this->_value = this->_nextValue;
+    if (this->_value == nts::Tristate::True)
+        this->_nextValue = nts::Tristate::False;
+    else if (this->_value == nts::Tristate::False)
+        this->_nextValue = nts::Tristate::True;
 }
 
 nts::Tristate nts::ClockComponent::compute(std::size_t pin)

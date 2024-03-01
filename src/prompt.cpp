@@ -9,11 +9,13 @@
 #include "../includes/Circuit.hpp"
 #include "../includes/components/InputComponent.hpp"
 #include "../ErrorHandling/ErrorHandling.hpp"
+#include <csignal>
+
+bool ISLOOPING;
 
 prompt::prompt()
 {
     this->_exit = false;
-    this->_isLooping = false;
 }
 
 prompt::~prompt()
@@ -24,6 +26,7 @@ void prompt::exit()
 {
         this->_exit = true;
 }
+
 
 std::pair<std::string, nts::Tristate> prompt::parse_input(std::string input)
 {
@@ -53,7 +56,7 @@ void prompt::launch_command(Circuit &circuit)
     else if (this->_input == "exit")
         this->exit();
     else if (this->_input == "loop")
-        this->_isLooping = true;
+        ISLOOPING = true;
     else {
         try {
             std::pair pair = this->parse_input(this->_input);
@@ -70,19 +73,33 @@ void prompt::launch_command(Circuit &circuit)
 
 }
 
+void signalHandler(int signum)
+{
+    if (signum == SIGINT) {
+        ISLOOPING = false;
+    }
+}
+
+void prompt::loop(Circuit &circuit)
+{
+    signal(SIGINT, signalHandler);
+    while (ISLOOPING == true) {
+        if (this->_input == "display" || this->_input == "loop") {
+            this->_input = "simulate";
+        } else {
+            this->_input = "display";
+        }
+        this->launch_command(circuit);
+    }
+}
+
 void prompt::run(Circuit &circuit)
 {
     while (this->_exit != true) {
+        this->loop(circuit);
         std::cout << "> ";
-        if (this->_isLooping == true) {
-            if (this->_input == "display" || this->_input == "loop") {
-                this->_input = "simulate";
-            } else {
-                this->_input = "display";
-            }
-        } else if (!std::getline(std::cin, this->_input) && std::cin.eof()) {
+        if (!std::getline(std::cin, this->_input) && std::cin.eof())
             this->exit();
-        }
         this->launch_command(circuit);
     }
 }

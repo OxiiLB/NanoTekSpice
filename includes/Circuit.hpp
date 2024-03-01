@@ -27,6 +27,7 @@
             void simulate(std::size_t tick);
             nts::Tristate compute(std::size_t pin);
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
+            std::pair<std::size_t, nts::IComponent *> getLink(std::size_t pin) const;
 
         // Getters & Setters
             int getTick();

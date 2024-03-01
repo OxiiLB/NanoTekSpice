@@ -24,7 +24,7 @@ prompt::~prompt()
 
 void prompt::exit()
 {
-        this->_exit = true;
+    this->_exit = true;
 }
 
 
@@ -70,7 +70,6 @@ void prompt::launch_command(Circuit &circuit)
             std::cerr << e.what() << '\n';
         }
     }
-
 }
 
 void signalHandler(int signum)

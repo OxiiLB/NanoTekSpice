@@ -2053,3 +2053,212 @@ Test(Gate4081, CheckUndefinedUndefined11, .init = redirect_all_stdout)
     gate4081.setLink(13, inputComp2, 1);
     cr_assert_eq(gate4081.compute(11), nts::Tristate::Undefined);
 }
+
+Test(ComponentFactory, CheckCreateTrue, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("true");
+
+    cr_assert_not_null(comp);
+    nts::TrueComponent *trueComp = dynamic_cast<nts::TrueComponent *>(comp.get());
+    cr_assert_not_null(trueComp);
+}
+
+Test(ComponentFactory, CheckCreateFalse, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("false");
+
+    cr_assert_not_null(comp);
+    nts::FalseComponent *falseComp = dynamic_cast<nts::FalseComponent *>(comp.get());
+    cr_assert_not_null(falseComp);
+}
+
+Test(ComponentFactory, CheckCreateInput, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("input");
+
+    cr_assert_not_null(comp);
+    nts::InputComponent *inputComp = dynamic_cast<nts::InputComponent *>(comp.get());
+    cr_assert_not_null(inputComp);
+}
+
+Test(ComponentFactory, CheckCreateOutput, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("output");
+
+    cr_assert_not_null(comp);
+    nts::OutputComponent *outputComp = dynamic_cast<nts::OutputComponent *>(comp.get());
+    cr_assert_not_null(outputComp);
+}
+
+Test(ComponentFactory, CheckCreateClock, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("clock");
+
+    cr_assert_not_null(comp);
+    nts::ClockComponent *clockComp = dynamic_cast<nts::ClockComponent *>(comp.get());
+    cr_assert_not_null(clockComp);
+}
+
+Test(ComponentFactory, CheckOrComponent, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("or");
+
+    cr_assert_not_null(comp);
+    nts::OrComponent *orComp = dynamic_cast<nts::OrComponent *>(comp.get());
+    cr_assert_not_null(orComp);
+}
+
+Test(ComponentFactory, CheckAndComponent, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("and");
+
+    cr_assert_not_null(comp);
+    nts::AndComponent *andComp = dynamic_cast<nts::AndComponent *>(comp.get());
+    cr_assert_not_null(andComp);
+}
+
+Test(ComponentFactory, CheckNotComponent, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("not");
+
+    cr_assert_not_null(comp);
+    nts::NotComponent *notComp = dynamic_cast<nts::NotComponent *>(comp.get());
+    cr_assert_not_null(notComp);
+}
+
+Test(ComponentFactory, CheckXorComponent, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("xor");
+
+    cr_assert_not_null(comp);
+    nts::XorComponent *xorComp = dynamic_cast<nts::XorComponent *>(comp.get());
+    cr_assert_not_null(xorComp);
+}
+
+Test(ComponentFactory, CheckBadComponent, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+
+    cr_expect_throw(factory.createComponent("bad"), nts::ComponentException);
+}
+
+Test(ComponentFactory, CheckCreate4001, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("nor");
+
+    cr_assert_not_null(comp);
+    nts::Nor *nor4 = dynamic_cast<nts::Nor *>(comp.get());
+    cr_assert_not_null(nor4);
+}
+
+Test(ComponentFactory, CheckCreate4011, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("nand");
+
+    cr_assert_not_null(comp);
+    nts::Nand *nand4 = dynamic_cast<nts::Nand *>(comp.get());
+    cr_assert_not_null(nand4);
+}
+
+Test(ComponentFactory, CheckCreate4030, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("xor4");
+
+    cr_assert_not_null(comp);
+    nts::Xor4 *xor4 = dynamic_cast<nts::Xor4 *>(comp.get());
+    cr_assert_not_null(xor4);
+}
+
+Test(ComponentFactory, CheckCreate4069, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("inverter");
+
+    cr_assert_not_null(comp);
+    nts::Inverter *inverter = dynamic_cast<nts::Inverter *>(comp.get());
+    cr_assert_not_null(inverter);
+}
+
+Test(ComponentFactory, CheckCreate4071, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("or4");
+
+    cr_assert_not_null(comp);
+    nts::Or4 *or4 = dynamic_cast<nts::Or4 *>(comp.get());
+    cr_assert_not_null(or4);
+}
+
+Test(ComponentFactory, CheckCreate4081, .init = redirect_all_stdout)
+{
+    nts::ComponentFactory factory;
+    std::unique_ptr<nts::IComponent> comp = factory.createComponent("and4");
+
+    cr_assert_not_null(comp);
+    nts::And4 *and4 = dynamic_cast<nts::And4 *>(comp.get());
+    cr_assert_not_null(and4);
+}
+
+Test(CircuitTests, CheckDisplay, .init = redirect_all_stdout)
+{
+    Circuit circuit;
+    nts::ComponentFactory factory;
+
+    std::unique_ptr<nts::IComponent> comp1 = factory.createComponent("true");
+    std::unique_ptr<nts::IComponent> comp2 = factory.createComponent("output");
+    comp2->setLink(1, *comp1, 1);
+    circuit.addComponent("a", comp1);
+    circuit.addComponent("b", comp2);
+    circuit.display();
+    cr_assert_stdout_eq_str("tick: 0\n"
+                            "input(s):\n"
+                            "output(s):\n"
+                            "  b: 1\n");
+}
+
+Test(CircuitTests, CheckUndef, .init = redirect_all_stdout)
+{
+    Circuit circuit;
+    nts::ComponentFactory factory;
+
+    std::unique_ptr<nts::IComponent> comp1 = factory.createComponent("input");
+    std::unique_ptr<nts::IComponent> comp2 = factory.createComponent("output");
+    comp2->setLink(1, *comp1, 1);
+    circuit.addComponent("a", comp1);
+    circuit.addComponent("b", comp2);
+    circuit.display();
+    cr_assert_stdout_eq_str("tick: 0\n"
+                            "input(s):\n"
+                            "  a: U\n"
+                            "output(s):\n"
+                            "  b: U\n");
+}
+
+Test(CircuitTests, CheckSimulate, .init = redirect_all_stdout)
+{
+    Circuit circuit;
+
+    circuit.simulate();
+    cr_assert_eq(circuit.getTick(), 1);
+}
+
+Test(promptTests, CheckParseInput, .init = redirect_all_stdout)
+{
+    prompt prompt;
+
+    std::pair<std::string, nts::Tristate> result = prompt.parse_input("a=1");
+    cr_assert_str_eq(result.first.c_str(), "a");
+    cr_assert_eq(result.second, nts::Tristate::True);
+}

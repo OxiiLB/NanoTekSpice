@@ -75,8 +75,12 @@ static void get_array(std::vector<std::string> &vector, const std::string &file_
 static int get_comp_type(std::string str)
 {
     int i = 0;
+    std::size_t pos = str.find(" ");
+    if (pos == std::string::npos)
+        throw nts::ImproperComponentLineException();
+    std::string first_half = str.substr(0, pos);
     for (i = 0; i < array_size; i++) {
-        if (str.find(comp_type_name_array[i]) != std::string::npos)
+        if (first_half.find(comp_type_name_array[i]) != std::string::npos)
             return i;
     }
     return -1;
@@ -175,7 +179,7 @@ static int check_in_out(std::vector<std::string> chipsets, std::string name)
                 return 0;
         }
     }
-    return -1;
+    return 3;
 }
 
 static void check_comp_name_exists(Circuit &circuit, std::string comp_n)
@@ -235,22 +239,28 @@ static void fill_circuit(Circuit &circuit, std::vector<std::string> &chipsets, s
         check_comp_pin_nums_unique(links, links[i]);
         other_name = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
+
         if (comp_name == other_name)
             throw nts::SelfLinkException();
         if (check_in_out(chipsets, comp_name) == 1 && check_in_out(chipsets, other_name) == 1)
             throw nts::CantLinkTwoInputsException();
         if (check_in_out(chipsets, comp_name) == 0 && check_in_out(chipsets, other_name) == 0)
             throw nts::CantLinkTWoOutputsException();
-        if (check_in_out(chipsets, comp_name) == 1 && check_in_out(chipsets, other_name) == 0) {
-            circuit.getComponent(other_name)->setLink(other_pin, *(circuit.getComponent(comp_name)), comp_pin);
-        } else if (check_in_out(chipsets, comp_name) == 0 && check_in_out(chipsets, other_name) == 1) {
+        if (check_in_out(chipsets, comp_name) == 2 && check_in_out(chipsets, other_name) == 2)
+            throw nts::CantLinkTwoClocksTogetherException();
+
+        if (check_in_out(chipsets, comp_name) == 0) {
             circuit.getComponent(comp_name)->setLink(comp_pin, *(circuit.getComponent(other_name)), other_pin);
-        } else if (check_in_out(chipsets, other_name) == 1) {
-           circuit.getComponent(comp_name)->setLink(comp_pin, *(circuit.getComponent(other_name)), other_pin);
         } else if (check_in_out(chipsets, other_name) == 0) {
-           circuit.getComponent(other_name)->setLink(other_pin, *(circuit.getComponent(comp_name)), comp_pin);
+            circuit.getComponent(other_name)->setLink(other_pin, *(circuit.getComponent(comp_name)), comp_pin);
+        } else if (check_in_out(chipsets, comp_name) == 1) {
+            circuit.getComponent(other_name)->setLink(other_pin, *(circuit.getComponent(comp_name)), comp_pin);
+        } else if (check_in_out(chipsets, other_name) == 1) {
+            circuit.getComponent(comp_name)->setLink(comp_pin, *(circuit.getComponent(other_name)), other_pin);
+        } else if (check_in_out(chipsets, comp_name) == 3 && check_in_out(chipsets, other_name) == 3) {
+            circuit.getComponent(comp_name)->setLink(comp_pin, *(circuit.getComponent(other_name)), other_pin);
         } else {
-           throw std::runtime_error("Error in link loop in fill circuit");
+            throw std::runtime_error("Error in link loop in fill circuit");
         }
     }
 }

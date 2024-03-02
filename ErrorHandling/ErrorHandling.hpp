@@ -139,6 +139,14 @@ namespace nts {
             }
     };
 
+    class ImproperComponentLineException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Improper component line");
+            }
+    };
+
     class InvalidCommandException : public std::exception {
         public:
             const char *what() const noexcept override
@@ -225,6 +233,14 @@ namespace nts {
             const char *what() const noexcept override
             {
                 return ("Cant link same pins together");
+            }
+    };
+
+    class CantLinkTwoClocksTogetherException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Cant link two clocks");
             }
     };
 }

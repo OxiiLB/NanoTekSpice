@@ -10,6 +10,8 @@
 
     #include "../ErrorHandling/ErrorHandling.hpp"
     #include "ComponentFactory.hpp"
+    #include "Circuit.hpp"
+    #include "prompt.hpp"
 
     #include "components/AndComponent.hpp"
     #include "components/ClockComponent.hpp"

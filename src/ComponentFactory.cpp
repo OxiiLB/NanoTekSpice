@@ -21,6 +21,7 @@
 #include "../includes/gates/Gate4030.hpp"
 #include "../includes/gates/Gate4069.hpp"
 #include "../includes/gates/Gate4071.hpp"
+#include "../includes/gates/Gate4081.hpp"
 
 
 nts::ComponentFactory::ComponentFactory()
@@ -35,10 +36,11 @@ nts::ComponentFactory::ComponentFactory()
     _FunctionTab["true"] = [this](){ return createTrueComponent(); };
     _FunctionTab["false"] = [this](){ return createFalseComponent(); };
     _FunctionTab["nor"] = [this](){ return createNorGate(); };
-    _FunctionTab["nand"] = [this](){ return createNorGate(); };
+    _FunctionTab["nand"] = [this](){ return createNandGate(); };
     _FunctionTab["inverter"] = [this](){ return createInverterGate(); };
     _FunctionTab["xor4"] = [this](){ return create4030Gate(); };
     _FunctionTab["or4"] = [this](){ return create4071Gate(); };
+    _FunctionTab["and4"] = [this](){ return create4081Gate(); };
 
 }
 
@@ -123,4 +125,9 @@ std::unique_ptr<nts::IComponent> nts::ComponentFactory::create4030Gate() const
 std::unique_ptr<nts::IComponent> nts::ComponentFactory::create4071Gate() const
 {
     return std::make_unique<nts::Or4>();
+}
+
+std::unique_ptr<nts::IComponent> nts::ComponentFactory::create4081Gate() const
+{
+    return std::make_unique<nts::And4>();
 }

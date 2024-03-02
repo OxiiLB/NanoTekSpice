@@ -36,6 +36,7 @@
                 std::unique_ptr<IComponent> createInverterGate() const;
                 std::unique_ptr<IComponent> create4030Gate() const;
                 std::unique_ptr<IComponent> create4071Gate() const;
+                std::unique_ptr<IComponent> create4081Gate() const;
 
             protected:
                 std::unordered_map<std::string, std::function<std::unique_ptr<IComponent>()>> _FunctionTab;

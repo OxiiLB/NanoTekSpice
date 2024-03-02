@@ -204,11 +204,27 @@ namespace nts {
             }
     };
 
-    class FailedToGet2DArrayException : public std::exception {
+    class CantLinkTWoOutputsException : public std::exception {
         public:
             const char *what() const noexcept override
             {
-                return ("Failed to get 2D array");
+                return ("Cant link two outputs");
+            }
+    };
+
+    class CantLinkTwoInputsException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Cant link two inputs");
+            }
+    };
+
+    class CantLinkSamePinsTogetherException : public std::exception {
+        public:
+            const char *what() const noexcept override
+            {
+                return ("Cant link same pins together");
             }
     };
 }

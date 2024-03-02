@@ -13,7 +13,6 @@ void check_config_file(const std::string &file_name)
 {
     int c = 0;
     int l = 0;
-
     std::string file = nts::get_file_content(file_name);
     if (file.empty())
         throw std::runtime_error("File not found");

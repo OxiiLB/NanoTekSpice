@@ -50,8 +50,17 @@ static void get_array(std::vector<std::string> &vector, const std::string &file_
     for (pos = pos; file_str[pos] != '\n'; pos++);
     pos++;
     for (pos = pos; file_str[pos] != '.' && file_str[pos] != '\0'; pos++) {
+        if (file_str[pos] == '\n')
+            continue;
         std::string str;
-        for (pos = pos; file_str[pos] != '\n' && file_str[pos] != '#' && file_str[pos] != '\0'; pos++) {
+        for (pos = pos; file_str[pos] != '\n' && file_str[pos] != '\0'; pos++) {
+            if (file_str[pos] == '#') {
+                for (pos = pos; file_str[pos] != '\n'; pos++);
+            }
+            if (file_str[pos] == '\t' || (file_str[pos] == ' ' && file_str[pos + 1] == ' '))
+                continue;
+            if (file_str[pos] == ' ' && file_str[pos + 1] == '.')
+                break;
             str += file_str[pos];
         }
         vector.push_back(str);
@@ -86,7 +95,7 @@ static std::string get_name(std::string name, std::string str)
     return name;
 }
 
-void check_if_name_repeated(std::vector<std::string> &chipsets, std::string comp_name)
+static void check_if_name_repeated(std::vector<std::string> &chipsets, std::string comp_name)
 {
     int i = 0;
     int count = 0;
@@ -102,9 +111,9 @@ static std::string get_comp_name(std::string str)
 {
     int i = 0;
     std::string name;
-    for (i = 0; str[i] != ' '; i++);
+    for (i = 0; str[i] != ' ' && str[i] != '\0'; i++);
     i++;
-    for (i = i; str[i] != ':'; i++) {
+    for (i = i; str[i] != ':' && str[i] != '\0'; i++) {
         name += str[i];
     }
     return name;
@@ -113,8 +122,18 @@ static std::string get_comp_name(std::string str)
 static std::size_t get_comp_pin_num(std::string str)
 {
     std::string comp_half;
-    comp_half = str.substr(str.find(" ") + 1);
-    comp_half = comp_half.substr(comp_half.find(":") + 1);
+    std::size_t pos = str.find(" ");
+    if (pos == std::string::npos)
+        throw nts::ImproperLinkLineException();
+    if (str[pos + 1] == ' ' || str[pos + 1] == '\n' || str[pos + 1] == '\0')
+        throw nts::ImproperLinkLineException();
+    comp_half = str.substr(pos + 1);
+    pos = comp_half.find(":");
+    if (pos == std::string::npos)
+        throw nts::ImproperLinkLineException();
+    if (comp_half[pos + 1] == ' ' || comp_half[pos + 1] == '\n' || comp_half[pos + 1] == '\0')
+        throw nts::ImproperLinkLineException();
+    comp_half = comp_half.substr(pos + 1);
     return ((std::size_t)(std::stoi(comp_half)));
 }
 
@@ -122,7 +141,7 @@ static std::string get_other_name(std::string str)
 {
     int i = 0;
     std::string name;
-    for (i = 0; str[i] != ':'; i++) {
+    for (i = 0; str[i] != ':' && str[i] != '\0'; i++) {
         name += str[i];
     }
     return name;
@@ -131,8 +150,14 @@ static std::string get_other_name(std::string str)
 static std::size_t get_other_pin_num(std::string str)
 {
     std::string first_half;
-    first_half = str.substr(str.find(":"));
-    first_half = first_half.substr(1, first_half.find(" "));
+    std::size_t pos = str.find(":");
+    if (pos == std::string::npos)
+        throw nts::ImproperLinkLineException();
+    first_half = str.substr(pos);
+    pos = first_half.find(" ");
+    if (pos == std::string::npos)
+        throw nts::ImproperLinkLineException();
+    first_half = first_half.substr(1, pos);
     return ((std::size_t)(std::stoi(first_half)));
 }
 
@@ -153,13 +178,35 @@ static int check_in_out(std::vector<std::string> chipsets, std::string name)
     return -1;
 }
 
-void check_comp_name_exists(Circuit &circuit, std::string comp_n)
+static void check_comp_name_exists(Circuit &circuit, std::string comp_n)
 {
     if (circuit.getComponent(comp_n) == NULL)
         throw nts::InexistentComponentNameException();
 }
 
-void fill_circuit(Circuit &circuit, std::vector<std::string> &chipsets, std::vector<std::string> &links)
+static void check_comp_pin_nums_unique(std::vector<std::string> &links, std::string str)
+{
+    int count = 0;
+    std::string comp_half;
+    std::size_t pos = str.find(" ");
+    comp_half = str.substr(pos + 1);
+    if (pos == std::string::npos)
+        throw nts::ImproperLinkLineException();
+    for (int i = 0; i < links.size(); i++) {
+        std::string comp_half2;
+        std::size_t pos2 = links[i].find(" ");
+        if (pos2 == std::string::npos)
+            throw nts::ImproperLinkLineException();
+        comp_half2 = links[i].substr(pos2 + 1);
+        if (comp_half == comp_half2)
+            count++;
+        comp_half2.clear();
+    }
+    if (count > 1)
+        throw nts::CantLinkSamePinsTogetherException();
+}
+
+static void fill_circuit(Circuit &circuit, std::vector<std::string> &chipsets, std::vector<std::string> &links)
 {
     int i = 0;
     int j = 0;
@@ -168,7 +215,9 @@ void fill_circuit(Circuit &circuit, std::vector<std::string> &chipsets, std::vec
     std::string comp_name;
     std::string other_name;
     nts::ComponentFactory factory;
-    for (i = 0; i < (chipsets.size() - 1); i++) {
+    for (i = 0; i < chipsets.size(); i++) {
+        if (chipsets[i] == "\n" || chipsets[i] == "")
+            continue;
         j = get_comp_type(chipsets[i]);
         if (j == -1)
             throw nts::InvalidComponentException();
@@ -183,11 +232,20 @@ void fill_circuit(Circuit &circuit, std::vector<std::string> &chipsets, std::vec
         comp_name = get_comp_name(links[i]);
         check_comp_name_exists(circuit, comp_name);
         comp_pin = get_comp_pin_num(links[i]);
+        check_comp_pin_nums_unique(links, links[i]);
         other_name = get_other_name(links[i]);
         other_pin = get_other_pin_num(links[i]);
         if (comp_name == other_name)
             throw nts::SelfLinkException();
-        if (check_in_out(chipsets, other_name) == 1 || check_in_out(chipsets, other_name) == 2) {
+        if (check_in_out(chipsets, comp_name) == 1 && check_in_out(chipsets, other_name) == 1)
+            throw nts::CantLinkTwoInputsException();
+        if (check_in_out(chipsets, comp_name) == 0 && check_in_out(chipsets, other_name) == 0)
+            throw nts::CantLinkTWoOutputsException();
+        if (check_in_out(chipsets, comp_name) == 1 && check_in_out(chipsets, other_name) == 0) {
+            circuit.getComponent(other_name)->setLink(other_pin, *(circuit.getComponent(comp_name)), comp_pin);
+        } else if (check_in_out(chipsets, comp_name) == 0 && check_in_out(chipsets, other_name) == 1) {
+            circuit.getComponent(comp_name)->setLink(comp_pin, *(circuit.getComponent(other_name)), other_pin);
+        } else if (check_in_out(chipsets, other_name) == 1) {
            circuit.getComponent(comp_name)->setLink(comp_pin, *(circuit.getComponent(other_name)), other_pin);
         } else if (check_in_out(chipsets, other_name) == 0) {
            circuit.getComponent(other_name)->setLink(other_pin, *(circuit.getComponent(comp_name)), comp_pin);

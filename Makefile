@@ -30,7 +30,6 @@ DIR_SRC		=	$(addprefix src/, $(SRC))
 MAIN_SRC	=	main.cpp						\
 				Parser/Parser.cpp				\
 				Parser/CheckFile.cpp			\
-				Parser/CheckCommands.cpp		\
 				FileHandling/FileHandling.cpp	\
 				Tools/BasicTools.cpp			\
 
